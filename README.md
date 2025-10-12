@@ -1,2 +1,2 @@
 # vetquiz-app
-Quiz Estudiantes de Medicina Veterinaria Ingles Técnico Parcial 1
+Quiz 1 for Vet Students
