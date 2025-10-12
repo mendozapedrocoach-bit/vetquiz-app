@@ -1,87 +1,843 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VetQuiz - Quiz de Medicina Veterinaria</title>
+    <title>VetQuizApp - U.P.T.N.T. Manuela Saenz</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 15px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 100%;
             margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
         }
-        .quiz-container {
+        
+        .card {
             background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
         }
-        h1 {
+        
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .header h1 {
             color: #2c3e50;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
             text-align: center;
         }
-        .question {
-            margin: 20px 0;
-            padding: 15px;
-            border-left: 4px solid #3498db;
-            background-color: #f8f9fa;
-        }
-        button {
-            background-color: #3498db;
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .select-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            background: white;
+        }
+        
+        .question {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .question h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 18px;
+            line-height: 1.4;
+        }
+        
+        .option-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 8px 0;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            text-align: left;
             cursor: pointer;
-            margin: 10px 5px;
+            transition: all 0.3s;
         }
-        button:hover {
-            background-color: #2980b9;
+        
+        .option-btn:hover {
+            border-color: #3498db;
+            background: #f0f8ff;
         }
+        
+        .option-btn.selected {
+            border-color: #2ecc71;
+            background: #d5f4e6;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+        
+        .results {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .score {
+            font-size: 48px;
+            font-weight: bold;
+            color: #2ecc71;
+            margin: 20px 0;
+        }
+        
+        .emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .language-btn {
+            background: #9b59b6;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .ranking-table th,
+        .ranking-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .ranking-table th {
+            background: #34495e;
+            color: white;
+        }
+        
+        .ranking-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .gold { background: #FFF9C4 !important; }
+        .silver { background: #F5F5F5 !important; }
+        .bronze { background: #FFE0B2 !important; }
     </style>
 </head>
 <body>
-    <div class="quiz-container">
-        <h1>🐾 VetQuiz - Medicina Veterinaria</h1>
-        <p>Bienvenido al quiz de Inglés Técnico - Parcial 1</p>
-        
-        <div class="question">
-            <h3>Pregunta 1: ¿Qué significa "Zoonosis"?</h3>
-            <button onclick="checkAnswer(1, 'a')">A) Enfermedad transmitida de animales a humanos</button>
-            <button onclick="checkAnswer(1, 'b')">B) Estudio de los dientes animales</button>
-            <button onclick="checkAnswer(1, 'c')">C) Tipo de cirugía veterinaria</button>
+    <div class="container">
+        <!-- PANTALLA DE INICIO -->
+        <div id="start-screen" class="card">
+            <div class="header">
+                <h1>Welcome to VetQuizApp 🩺</h1>
+                <p>U.P.T.N.T. Manuela Saenz</p>
+            </div>
+            
+            <div class="input-group">
+                <label for="name-select">Select your Name:</label>
+                <select id="name-select" class="select-input">
+                    <option value="">Choose your name</option>
+                    <option value="Student A">Student A</option>
+                    <option value="Student B">Student B</option>
+                    <option value="Student C">Student C</option>
+                    <option value="Student D">Student D</option>
+                    <option value="Student E">Student E</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label for="doc-select">Select your ID:</label>
+                <select id="doc-select" class="select-input">
+                    <option value="">Choose your ID</option>
+                    <option value="ID001">ID001</option>
+                    <option value="ID002">ID002</option>
+                    <option value="ID003">ID003</option>
+                    <option value="ID004">ID004</option>
+                    <option value="ID005">ID005</option>
+                </select>
+            </div>
+            
+            <button class="btn btn-primary" onclick="startQuiz()">Start Quiz</button>
+            <button class="btn btn-secondary" onclick="showTeacherLogin()">Teacher Access</button>
         </div>
 
-        <div class="question">
-            <h3>Pregunta 2: ¿Qué es "Antibiotic resistance"?</h3>
-            <button onclick="checkAnswer(2, 'a')">A) Resistencia a los antibióticos</button>
-            <button onclick="checkAnswer(2, 'b')">B) Alergia a los medicamentos</button>
-            <button onclick="checkAnswer(2, 'c')">C) Efecto secundario de vacunas</button>
+        <!-- PANTALLA DE LOGIN PROFESOR -->
+        <div id="teacher-login" class="card hidden">
+            <div class="header">
+                <h1>Teacher Login 🧑‍🏫</h1>
+            </div>
+            
+            <div class="input-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" class="select-input" placeholder="Enter username">
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" class="select-input" placeholder="Enter password">
+            </div>
+            
+            <button class="btn btn-primary" onclick="verifyLogin()">Login</button>
+            <button class="btn btn-secondary" onclick="showStartScreen()">Back</button>
         </div>
 
-        <button onclick="showResults()">Ver resultados</button>
-        <p id="result"></p>
+        <!-- PANTALLA DE QUIZ -->
+        <div id="quiz-screen" class="card hidden">
+            <div class="header">
+                <h3 id="question-number">Question 1/10</h3>
+                <button class="language-btn" onclick="toggleLanguage()" id="language-btn">🌐 Español</button>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 10%"></div>
+            </div>
+            
+            <div class="question">
+                <h3 id="question-text">Loading question...</h3>
+            </div>
+            
+            <div id="options-container">
+                <!-- Las opciones se cargan aquí dinámicamente -->
+            </div>
+            
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn btn-secondary" onclick="prevQuestion()" id="prev-btn" style="flex: 1;">← Back</button>
+                <button class="btn btn-primary" onclick="nextQuestion()" id="next-btn" style="flex: 1;">Next →</button>
+                <button class="btn btn-success hidden" onclick="finishQuiz()" id="finish-btn" style="flex: 1;">Finish Quiz</button>
+            </div>
+        </div>
+
+        <!-- PANTALLA DE RESULTADOS -->
+        <div id="results-screen" class="card hidden">
+            <div class="results">
+                <div class="emoji" id="result-emoji">🎯</div>
+                <h2 id="result-text">Quiz Completed!</h2>
+                <div class="score" id="final-score">0/20</div>
+                <p id="student-info"></p>
+                
+                <button class="btn btn-primary" onclick="showStartScreen()">Return to Menu</button>
+                <button class="btn btn-success" onclick="startQuiz()">Restart Quiz</button>
+                <button class="btn btn-danger hidden" onclick="showWrongAnswers()" id="wrong-answers-btn">❌ View Wrong Answers</button>
+            </div>
+        </div>
+
+        <!-- MENÚ PROFESOR -->
+        <div id="teacher-menu" class="card hidden">
+            <div class="header">
+                <h1>Teacher Menu 🧑‍🏫</h1>
+            </div>
+            
+            <button class="btn btn-primary" onclick="viewRanking()">📊 View Results & Ranking</button>
+            <button class="btn btn-warning" onclick="changeUsername()">📝 Change Username</button>
+            <button class="btn btn-warning" onclick="changePassword()">🔑 Change Password</button>
+            <button class="btn btn-danger" onclick="deleteDatabase()">🗑️ Delete Database</button>
+            <button class="btn btn-secondary" onclick="showStartScreen()">⬅️ Back to Menu</button>
+        </div>
+
+        <!-- RANKING -->
+        <div id="ranking-screen" class="card hidden">
+            <div class="header">
+                <h1>Student Ranking 📊</h1>
+            </div>
+            
+            <div id="ranking-table-container">
+                <!-- La tabla de ranking se carga aquí -->
+            </div>
+            
+            <button class="btn btn-primary" onclick="exportToExcel()">💾 Export to Excel</button>
+            <button class="btn btn-primary" onclick="exportToCSV()">📄 Export to CSV</button>
+            <button class="btn btn-secondary" onclick="showTeacherMenu()">⬅️ Back</button>
+        </div>
     </div>
 
     <script>
-        let score = 0;
-        const correctAnswers = {
-            1: 'a',
-            2: 'a'
-        };
+        // ---------- TODAS LAS 50 PREGUNTAS ----------
+        const questions = [
+            // Preguntas 1-25 (simples)
+            {"en": "Produce hides widely used in the leather industry.", 
+             "es": "Produce cueros ampliamente utilizados en la industria del cuero.",
+             "answer": "Cattle", "number": 1},
+            {"en": "Have no teeth; they grind food in the gizzard.", 
+             "es": "No tienen dientes; trituran la comida en la molleja.",
+             "answer": "Poultry", "number": 2},
+            {"en": "Gestation period famously called '3 months, 3 weeks, 3 days.'", 
+             "es": "Periodo de gestación famosamente llamado '3 meses, 3 semanas, 3 días.'",
+             "answer": "Pigs", "number": 3},
+            {"en": "Often raised in flocks for grazing in open pastures.", 
+             "es": "Suelen criarse en rebaños para pastar en pastizales abiertos.",
+             "answer": "Sheep", "number": 4},
+            {"en": "Iconic breeds include Angus, Holstein, and Hereford.", 
+             "es": "Las razas icónicas incluyen Angus, Holstein y Hereford.",
+             "answer": "Cattle", "number": 5},
+            {"en": "Laying hens produce around 250–300 eggs per year.", 
+             "es": "Las gallinas ponedoras producen alrededor de 250-300 huevos por año.",
+             "answer": "Poultry", "number": 6},
+            {"en": "Provide pork cuts such as ham, bacon, and ribs.", 
+             "es": "Proporcionan cortes de cerdo como jamón, tocino y costillas.",
+             "answer": "Pigs", "number": 7},
+            {"en": "Milk is mainly used for cheese like Roquefort or Manchego.", 
+             "es": "La leche se utiliza principalmente para quesos como Roquefort o Manchego.",
+             "answer": "Sheep", "number": 8},
+            {"en": "Excellent climbers, able to move on rocky and steep terrain.", 
+             "es": "Excelentes trepadores, capaces de moverse en terrenos rocosos y empinados.",
+             "answer": "Goats", "number": 9},
+            {"en": "Produce wool that must be sheared at least once a year.", 
+             "es": "Producen lana que debe esquilarse al menos una vez al año.",
+             "answer": "Sheep", "number": 10},
+            {"en": "Provide both eggs and white meat as main products.", 
+             "es": "Proporcionan tanto huevos como carne blanca como productos principales.",
+             "answer": "Poultry", "number": 11},
+            {"en": "Main source of beef and dairy products.", 
+             "es": "Fuente principal de carne de res y productos lácteos.",
+             "answer": "Cattle", "number": 12},
+            {"en": "Have a sensitive snout used for rooting in soil.", 
+             "es": "Tienen un hocico sensible utilizado para hozar en el suelo.",
+             "answer": "Pigs", "number": 13},
+            {"en": "Produce highly nutritious milk, often used for specialty cheeses.", 
+             "es": "Producen leche altamente nutritiva, a menudo utilizada para quesos especiales.",
+             "answer": "Goats", "number": 14},
+            {"en": "Broiler breeds like Cornish Cross grow to market weight in 6–8 weeks.", 
+             "es": "Las razas de pollos de engorde como Cornish Cross alcanzan el peso de mercado en 6-8 semanas.",
+             "answer": "Poultry", "number": 15},
+            {"en": "Can weigh over 1,200 kg in some breeds.", 
+             "es": "Pueden pesar más de 1,200 kg en algunas razas.",
+             "answer": "Cattle", "number": 16},
+            {"en": "Breeds include Merino and Suffolk, known for fine wool.", 
+             "es": "Las razas incluyen Merino y Suffolk, conocidas por su lana fina.",
+             "answer": "Sheep", "number": 17},
+            {"en": "Beards and horns are common in both males and females.", 
+             "es": "Las barbas y los cuernos son comunes tanto en machos como en hembras.",
+             "answer": "Goats", "number": 18},
+            {"en": "Extremely intelligent, capable of learning tricks and solving problems.", 
+             "es": "Extremadamente inteligentes, capaces de aprender trucos y resolver problemas.",
+             "answer": "Pigs", "number": 19},
+            {"en": "Breeds like Boer (meat) and Saanen (milk) are widely recognized.", 
+             "es": "Razas como Boer (carne) y Saanen (leche) son ampliamente reconocidas.",
+             "answer": "Goats", "number": 20},
+            {"en": "Tail docking is a common management practice.", 
+             "es": "El corte de cola es una práctica de manejo común.",
+             "answer": "Sheep", "number": 21},
+            {"en": "Have four stomach compartments for digesting grass.", 
+             "es": "Tienen cuatro compartimentos estomacales para digerir hierba.",
+             "answer": "Cattle", "number": 22},
+            {"en": "Very curious and mischievous behavior.", 
+             "es": "Comportamiento muy curioso y travieso.",
+             "answer": "Goats", "number": 23},
+            {"en": "Breeds include Yorkshire and Duroc, common in commercial farming.", 
+             "es": "Las razas incluyen Yorkshire y Duroc, comunes en la ganadería comercial.",
+             "answer": "Pigs", "number": 24},
+            {"en": "Chickens have a comb and wattles as distinctive features.", 
+             "es": "Los pollos tienen cresta y barbillas como características distintivas.",
+             "answer": "Poultry", "number": 25},
+            
+            // Preguntas 26-50 (con órganos)
+            {"en": "This organ has four compartments: rumen, reticulum, omasum, and abomasum. It allows the animal to digest fiber efficiently.", 
+             "es": "Este órgano tiene cuatro compartimentos: rumen, retículo, omaso y abomaso. Permite al animal digerir fibra eficientemente.",
+             "answer": "Cow (Bovine stomach)", "number": 26},
+            {"en": "This organ is long and spiral-shaped, specialized for absorbing nutrients in monogastric animals.", 
+             "es": "Este órgano es largo y en forma de espiral, especializado para absorber nutrientes en animales monogástricos.",
+             "answer": "Pig (Small intestine)", "number": 27},
+            {"en": "This organ is small and bean-shaped, filtering nitrogen waste in uric acid instead of urea.", 
+             "es": "Este órgano es pequeño y con forma de frijol, filtra desechos nitrogenados en ácido úrico en lugar de urea.",
+             "answer": "Poultry (Kidney)", "number": 28},
+            {"en": "This organ produces lanolin and helps regulate body temperature through wool follicles.", 
+             "es": "Este órgano produce lanolina y ayuda a regular la temperatura corporal a través de los folículos de lana.",
+             "answer": "Sheep (Skin)", "number": 29},
+            {"en": "This organ is bilobed and produces enzymes for milk digestion in young ruminants.", 
+             "es": "Este órgano es bilobulado y produce enzimas para la digestión de la leche en rumiantes jóvenes.",
+             "answer": "Goat (Abomasum in kids)", "number": 30},
+            {"en": "This muscular organ grinds food with the help of grit and stones swallowed by the animal.", 
+             "es": "Este órgano muscular tritura la comida con la ayuda de arenilla y piedras tragadas por el animal.",
+             "answer": "Poultry (Gizzard)", "number": 31},
+            {"en": "This organ has a large cecum that ferments fibrous plant material, though not as big as in horses.", 
+             "es": "Este órgano tiene un ciego grande que fermenta material vegetal fibroso, aunque no tan grande como en los caballos.",
+             "answer": "Pig (Cecum)", "number": 32},
+            {"en": "This organ has horizontal pupils, giving a wide field of vision to detect predators.", 
+             "es": "Este órgano tiene pupilas horizontales, dando un amplio campo de visión para detectar depredadores.",
+             "answer": "Goat (Eyes)", "number": 33},
+            {"en": "This organ is massive in size, taking up much of the abdominal cavity and responsible for rumination.", 
+             "es": "Este órgano es masivo en tamaño, ocupa gran parte de la cavidad abdominal y es responsable de la rumia.",
+             "answer": "Cow (Rumen)", "number": 34},
+            {"en": "This organ has air sacs that extend into bones, making respiration highly efficient.", 
+             "es": "Este órgano tiene sacos aéreos que se extienden hasta los huesos, haciendo la respiración altamente eficiente.",
+             "answer": "Poultry (Respiratory system)", "number": 35},
+            {"en": "This organ in males is spiral-shaped and adapted for quick copulation.", 
+             "es": "Este órgano en los machos tiene forma espiral y está adaptado para una cópula rápida.",
+             "answer": "Sheep (Penis)", "number": 36},
+            {"en": "This organ has strong canines and molars adapted for crushing hard grains and mastication.", 
+             "es": "Este órgano tiene caninos y molares fuertes adaptados para triturar granos duros y masticar.",
+             "answer": "Pig (Teeth)", "number": 37},
+            {"en": "This organ secretes wax that protects the ear canal and is particularly large in dairy animals.", 
+             "es": "Este órgano secreta cera que protege el canal auditivo y es particularmente grande en animales lecheros.",
+             "answer": "Cow (Ear gland system)", "number": 38},
+            {"en": "This organ produces eggs covered with a calcium shell, unique among domestic animals.", 
+             "es": "Este órgano produce huevos cubiertos con una cáscara de calcio, único entre los animales domésticos.",
+             "answer": "Poultry (Ovary/Oviduct)", "number": 39},
+            {"en": "This organ has a large rumen but is relatively smaller compared to cattle, making them more selective feeders.", 
+             "es": "Este órgano tiene un rumen grande pero relativamente más pequeño en comparación con el ganado, lo que los hace alimentadores más selectivos.",
+             "answer": "Goat (Stomach)", "number": 40},
+            {"en": "This organ is double-lobed, producing bile but lacking a gall bladder in some species.", 
+             "es": "Este órgano es bilobulado, produce bilis pero carece de vesícula biliar en algunas especies.",
+             "answer": "Sheep (Liver)", "number": 41},
+            {"en": "This organ has a spiral colon that improves absorption in omnivores.", 
+             "es": "Este órgano tiene un colon espiral que mejora la absorción en omnívoros.",
+             "answer": "Pig (Large intestine)", "number": 42},
+            {"en": "This organ is responsible for producing milk with high butterfat content compared to other ruminants.", 
+             "es": "Este órgano es responsable de producir leche con alto contenido de grasa butírica en comparación con otros rumiantes.",
+             "answer": "Sheep (Mammary gland)", "number": 43},
+            {"en": "This organ is strong and muscular, pumping blood through a four-chambered structure in all livestock species.", 
+             "es": "Este órgano es fuerte y muscular, bombea sangre a través de una estructura de cuatro cámaras en todas las especies de ganado.",
+             "answer": "Cow (Heart)", "number": 44},
+            {"en": "This organ filters blood but has a long, slender shape in ruminants.", 
+             "es": "Este órgano filtra la sangre pero tiene una forma larga y delgada en rumiantes.",
+             "answer": "Goat (Spleen)", "number": 45},
+            {"en": "This organ has a crop where food is temporarily stored before digestion.", 
+             "es": "Este órgano tiene un buche donde la comida se almacena temporalmente antes de la digestión.",
+             "answer": "Poultry (Crop)", "number": 46},
+            {"en": "This organ has horns that curve outward in males, used for defense and dominance.", 
+             "es": "Este órgano tiene cuernos que se curvan hacia afuera en los machos, utilizados para defensa y dominancia.",
+             "answer": "Goat (Horn)", "number": 47},
+            {"en": "This organ can produce large amounts of saliva—up to 150 liters a day for digestion.", 
+             "es": "Este órgano puede producir grandes cantidades de saliva—hasta 150 litros al día para la digestión.",
+             "answer": "Cow (Salivary glands)", "number": 48},
+            {"en": "This organ produces thick skin that is often used for leather and hides.", 
+             "es": "Este órgano produce piel gruesa que a menudo se utiliza para cuero y pieles.",
+             "answer": "Pig (Skin)", "number": 49},
+            {"en": "This organ produces wool fibers that have commercial value.", 
+             "es": "Este órgano produce fibras de lana que tienen valor comercial.",
+             "answer": "Sheep (Skin/wool follicles)", "number": 50}
+        ];
 
-        function checkAnswer(question, answer) {
-            if (correctAnswers[question] === answer) {
-                score++;
+        // ---------- VARIABLES GLOBALES ----------
+        let currentScreen = 'start';
+        let selectedQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let score = 0;
+        let wrongQuestions = [];
+        let currentLanguage = 'en';
+        let studentData = { name: '', doc: '' };
+
+        // ---------- FUNCIONES DE NAVEGACIÓN ----------
+        function showScreen(screenName) {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('teacher-login').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('results-screen').classList.add('hidden');
+            document.getElementById('teacher-menu').classList.add('hidden');
+            document.getElementById('ranking-screen').classList.add('hidden');
+            
+            document.getElementById(screenName + '-screen').classList.remove('hidden');
+            currentScreen = screenName;
+        }
+
+        function showStartScreen() {
+            showScreen('start');
+        }
+
+        function showTeacherLogin() {
+            showScreen('teacher-login');
+        }
+
+        // ---------- FUNCIONES DEL QUIZ ----------
+        function startQuiz() {
+            const name = document.getElementById('name-select').value;
+            const doc = document.getElementById('doc-select').value;
+            
+            if (!name || !doc) {
+                alert('Please select your name and ID.');
+                return;
+            }
+            
+            studentData = { name, doc };
+            
+            // Seleccionar 10 preguntas aleatorias
+            selectedQuestions = [...questions].sort(() => 0.5 - Math.random()).slice(0, 10);
+            currentQuestionIndex = 0;
+            userAnswers = {};
+            score = 0;
+            wrongQuestions = [];
+            currentLanguage = 'en';
+            
+            showScreen('quiz');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= selectedQuestions.length) {
+                finishQuiz();
+                return;
+            }
+            
+            const question = selectedQuestions[currentQuestionIndex];
+            const questionNum = currentQuestionIndex + 1;
+            
+            // Actualizar número de pregunta y progreso
+            document.getElementById('question-number').textContent = `Question ${questionNum}/10`;
+            document.getElementById('progress-fill').style.width = `${(questionNum / 10) * 100}%`;
+            
+            // Actualizar texto de la pregunta
+            document.getElementById('question-text').textContent = 
+                currentLanguage === 'en' ? question.en : question.es;
+            
+            // Actualizar botón de idioma
+            document.getElementById('language-btn').textContent = 
+                currentLanguage === 'en' ? '🌐 Español' : '🌐 English';
+            
+            // Generar opciones
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            let displayOptions = [];
+            if (question.number >= 26) {
+                // Para preguntas de órganos (26-50)
+                const correctAnswer = question.answer;
+                const allWrongOptions = [
+                    "Cow (Bovine stomach)", "Poultry (Gizzard)", "Pig (Small intestine)", 
+                    "Sheep (Skin)", "Goat (Abomasum in kids)", "Poultry (Kidney)",
+                    "Pig (Cecum)", "Goat (Eyes)", "Cow (Rumen)", "Poultry (Respiratory system)",
+                    "Sheep (Penis)", "Pig (Teeth)", "Cow (Ear gland system)", "Poultry (Ovary/Oviduct)",
+                    "Goat (Stomach)", "Sheep (Liver)", "Pig (Large intestine)", "Sheep (Mammary gland)",
+                    "Cow (Heart)", "Goat (Spleen)", "Poultry (Crop)", "Goat (Horn)", 
+                    "Cow (Salivary glands)", "Pig (Skin)", "Sheep (Skin/wool follicles)"
+                ];
+                const wrongOptions = allWrongOptions.filter(opt => opt !== correctAnswer);
+                const selectedWrongOptions = wrongOptions.sort(() => 0.5 - Math.random()).slice(0, 4);
+                displayOptions = [...selectedWrongOptions, correctAnswer].sort(() => 0.5 - Math.random());
+            } else {
+                // Para preguntas simples (1-25)
+                displayOptions = ["Cattle", "Poultry", "Pigs", "Sheep", "Goats"];
+                if (!displayOptions.includes(question.answer)) {
+                    displayOptions[Math.floor(Math.random() * 5)] = question.answer;
+                }
+                displayOptions = displayOptions.sort(() => 0.5 - Math.random());
+            }
+            
+            // Crear botones de opciones
+            displayOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = option;
+                button.onclick = () => selectOption(option, button);
+                
+                if (userAnswers[currentQuestionIndex] === option) {
+                    button.classList.add('selected');
+                }
+                
+                optionsContainer.appendChild(button);
+            });
+            
+            // Actualizar botones de navegación
+            document.getElementById('prev-btn').classList.toggle('hidden', currentQuestionIndex === 0);
+            document.getElementById('next-btn').classList.toggle('hidden', currentQuestionIndex === 9);
+            document.getElementById('finish-btn').classList.toggle('hidden', currentQuestionIndex !== 9);
+        }
+
+        function selectOption(option, button) {
+            // Remover selección anterior
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Seleccionar nueva opción
+            button.classList.add('selected');
+            userAnswers[currentQuestionIndex] = option;
+        }
+
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'en' ? 'es' : 'en';
+            loadQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < selectedQuestions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
             }
         }
 
-        function showResults() {
-            const totalQuestions = Object.keys(correctAnswers).length;
-            document.getElementById('result').innerHTML = 
-                `Resultado: ${score} de ${totalQuestions} correctas`;
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
         }
+
+        function finishQuiz() {
+            // Calcular puntaje
+            score = 0;
+            wrongQuestions = [];
+            
+            selectedQuestions.forEach((question, index) => {
+                if (userAnswers[index] === question.answer) {
+                    score += 2; // 2 puntos por respuesta correcta
+                } else {
+                    wrongQuestions.push({
+                        number: question.number,
+                        question_en: question.en,
+                        question_es: question.es,
+                        user_answer: userAnswers[index] || 'No answer',
+                        correct_answer: question.answer
+                    });
+                }
+            });
+            
+            // Mostrar resultados
+            const percentage = (score / 20) * 100;
+            const roundedScore = Math.ceil(score);
+            
+            document.getElementById('final-score').textContent = `${score.toFixed(1)}/20 (${percentage.toFixed(1)}%)`;
+            document.getElementById('student-info').textContent = 
+                `Student: ${studentData.name} | ID: ${studentData.doc}`;
+            
+            // Determinar emoji y color según puntaje
+            let emoji, text, color;
+            if (percentage >= 90) {
+                emoji = '🎉'; text = 'Excellent!'; color = '#2ecc71';
+            } else if (percentage >= 70) {
+                emoji = '👍'; text = 'Good job!'; color = '#f39c12';
+            } else {
+                emoji = '📚'; text = 'Keep studying!'; color = '#e74c3c';
+            }
+            
+            document.getElementById('result-emoji').textContent = emoji;
+            document.getElementById('result-text').textContent = text;
+            document.getElementById('final-score').style.color = color;
+            
+            // Mostrar botón de respuestas incorrectas si hay
+            document.getElementById('wrong-answers-btn').classList.toggle('hidden', wrongQuestions.length === 0);
+            
+            showScreen('results');
+            
+            // Guardar resultado (simulado - en navegador)
+            saveResult(studentData.name, studentData.doc, score, percentage, roundedScore);
+        }
+
+        // ---------- FUNCIONES DE PROFESOR ----------
+        function verifyLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Credenciales por defecto
+            if (username === 'Coach' && password === '19082008') {
+                showTeacherMenu();
+            } else {
+                alert('Invalid credentials. Please try again.');
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+            }
+        }
+
+        function showTeacherMenu() {
+            showScreen('teacher-menu');
+        }
+
+        function changeUsername() {
+            const newUsername = prompt('Enter new username:');
+            if (newUsername) {
+                alert('Username updated successfully!');
+            }
+        }
+
+        function changePassword() {
+            const newPassword = prompt('Enter new password:');
+            if (newPassword) {
+                alert('Password updated successfully!');
+            }
+        }
+
+        function deleteDatabase() {
+            if (confirm('Are you sure you want to delete ALL student results?\nThis action cannot be undone.')) {
+                localStorage.removeItem('quizResults');
+                alert('Database cleared successfully!');
+            }
+        }
+
+        function viewRanking() {
+            const results = getResults();
+            const container = document.getElementById('ranking-table-container');
+            
+            if (results.length === 0) {
+                container.innerHTML = '<p>No results found.</p>';
+            } else {
+                let html = `
+                    <table class="ranking-table">
+                        <tr>
+                            <th>Pos</th>
+                            <th>Name</th>
+                            <th>ID</th>
+                            <th>Score</th>
+                            <th>Percentage</th>
+                            <th>Rounded</th>
+                        </tr>
+                `;
+                
+                results.sort((a, b) => b.percentage - a.percentage);
+                
+                results.forEach((result, index) => {
+                    let rowClass = '';
+                    if (index === 0) rowClass = 'gold';
+                    else if (index === 1) rowClass = 'silver';
+                    else if (index === 2) rowClass = 'bronze';
+                    
+                    html += `
+                        <tr class="${rowClass}">
+                            <td>${index + 1}</td>
+                            <td>${result.name}</td>
+                            <td>${result.doc}</td>
+                            <td>${result.score}</td>
+                            <td>${result.percentage}%</td>
+                            <td><strong>${result.roundedScore}</strong></td>
+                        </tr>
+                    `;
+                });
+                
+                html += '</table>';
+                container.innerHTML = html;
+            }
+            
+            showScreen('ranking');
+        }
+
+        // ---------- ALMACENAMIENTO (localStorage) ----------
+        function saveResult(name, doc, score, percentage, roundedScore) {
+            const results = getResults();
+            results.push({
+                name,
+                doc,
+                score: score.toFixed(1),
+                percentage: percentage.toFixed(1),
+                roundedScore,
+                timestamp: new Date().toISOString()
+            });
+            localStorage.setItem('quizResults', JSON.stringify(results));
+        }
+
+        function getResults() {
+            return JSON.parse(localStorage.getItem('quizResults') || '[]');
+        }
+
+        function exportToExcel() {
+            alert('Excel export functionality would be implemented here.');
+        }
+
+        function exportToCSV() {
+            alert('CSV export functionality would be implemented here.');
+        }
+
+        function showWrongAnswers() {
+            let message = 'Wrong Answers Review:\n\n';
+            wrongQuestions.forEach((wq, index) => {
+                message += `Q${wq.number}: ${wq.question_en}\n`;
+                message += `Your answer: ${wq.user_answer}\n`;
+                message += `Correct answer: ${wq.correct_answer}\n\n`;
+            });
+            alert(message);
+        }
+
+        // Inicializar
+        showStartScreen();
     </script>
 </body>
 </html>
