@@ -103,13 +103,19 @@
             color: #2c3e50;
         }
         
-        .select-input {
+        .text-input, .select-input {
             width: 100%;
             padding: 15px;
             border: 2px solid #e0e0e0;
             border-radius: 10px;
             font-size: 16px;
             background: white;
+            font-family: inherit;
+        }
+        
+        .text-input:focus, .select-input:focus {
+            border-color: #3498db;
+            outline: none;
         }
         
         .question {
@@ -202,11 +208,12 @@
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
+            font-size: 14px;
         }
         
         .ranking-table th,
         .ranking-table td {
-            padding: 12px;
+            padding: 10px;
             text-align: left;
             border-bottom: 1px solid #ecf0f1;
         }
@@ -223,6 +230,37 @@
         .gold { background: #FFF9C4 !important; }
         .silver { background: #F5F5F5 !important; }
         .bronze { background: #FFE0B2 !important; }
+        
+        .teacher-credentials {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .teacher-credentials h4 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .wrong-answers-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 15px 0;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+        
+        .wrong-answer-item {
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+        }
     </style>
 </head>
 <body>
@@ -235,31 +273,23 @@
             </div>
             
             <div class="input-group">
-                <label for="name-select">Select your Name:</label>
-                <select id="name-select" class="select-input">
-                    <option value="">Choose your name</option>
-                    <option value="Student A">Student A</option>
-                    <option value="Student B">Student B</option>
-                    <option value="Student C">Student C</option>
-                    <option value="Student D">Student D</option>
-                    <option value="Student E">Student E</option>
-                </select>
+                <label for="name-input">Full Name:</label>
+                <input type="text" id="name-input" class="text-input" placeholder="Enter your full name">
             </div>
             
             <div class="input-group">
-                <label for="doc-select">Select your ID:</label>
-                <select id="doc-select" class="select-input">
-                    <option value="">Choose your ID</option>
-                    <option value="ID001">ID001</option>
-                    <option value="ID002">ID002</option>
-                    <option value="ID003">ID003</option>
-                    <option value="ID004">ID004</option>
-                    <option value="ID005">ID005</option>
-                </select>
+                <label for="doc-input">Student ID:</label>
+                <input type="text" id="doc-input" class="text-input" placeholder="Enter your student ID">
             </div>
             
             <button class="btn btn-primary" onclick="startQuiz()">Start Quiz</button>
             <button class="btn btn-secondary" onclick="showTeacherLogin()">Teacher Access</button>
+            
+            <div class="teacher-credentials">
+                <h4>Teacher Access Info:</h4>
+                <p><strong>Username:</strong> Coach</p>
+                <p><strong>Password:</strong> 19082008</p>
+            </div>
         </div>
 
         <!-- PANTALLA DE LOGIN PROFESOR -->
@@ -270,16 +300,16 @@
             
             <div class="input-group">
                 <label for="username">Username:</label>
-                <input type="text" id="username" class="select-input" placeholder="Enter username">
+                <input type="text" id="username" class="text-input" placeholder="Enter username" value="Coach">
             </div>
             
             <div class="input-group">
                 <label for="password">Password:</label>
-                <input type="password" id="password" class="select-input" placeholder="Enter password">
+                <input type="password" id="password" class="text-input" placeholder="Enter password" value="19082008">
             </div>
             
             <button class="btn btn-primary" onclick="verifyLogin()">Login</button>
-            <button class="btn btn-secondary" onclick="showStartScreen()">Back</button>
+            <button class="btn btn-secondary" onclick="showStartScreen()">Back to Main Menu</button>
         </div>
 
         <!-- PANTALLA DE QUIZ -->
@@ -316,7 +346,7 @@
                 <div class="score" id="final-score">0/20</div>
                 <p id="student-info"></p>
                 
-                <button class="btn btn-primary" onclick="showStartScreen()">Return to Menu</button>
+                <button class="btn btn-primary" onclick="showStartScreen()">Return to Main Menu</button>
                 <button class="btn btn-success" onclick="startQuiz()">Restart Quiz</button>
                 <button class="btn btn-danger hidden" onclick="showWrongAnswers()" id="wrong-answers-btn">❌ View Wrong Answers</button>
             </div>
@@ -326,28 +356,46 @@
         <div id="teacher-menu" class="card hidden">
             <div class="header">
                 <h1>Teacher Menu 🧑‍🏫</h1>
+                <p>Administrative Panel</p>
             </div>
             
             <button class="btn btn-primary" onclick="viewRanking()">📊 View Results & Ranking</button>
             <button class="btn btn-warning" onclick="changeUsername()">📝 Change Username</button>
             <button class="btn btn-warning" onclick="changePassword()">🔑 Change Password</button>
-            <button class="btn btn-danger" onclick="deleteDatabase()">🗑️ Delete Database</button>
-            <button class="btn btn-secondary" onclick="showStartScreen()">⬅️ Back to Menu</button>
+            <button class="btn btn-danger" onclick="deleteDatabase()">🗑️ Delete All Results</button>
+            <button class="btn btn-secondary" onclick="showStartScreen()">⬅️ Back to Main Menu</button>
         </div>
 
-        <!-- RANKING -->
+        <!-- RANKING Y RESULTADOS -->
         <div id="ranking-screen" class="card hidden">
             <div class="header">
                 <h1>Student Ranking 📊</h1>
+                <p>All quiz results</p>
             </div>
             
             <div id="ranking-table-container">
                 <!-- La tabla de ranking se carga aquí -->
             </div>
             
-            <button class="btn btn-primary" onclick="exportToExcel()">💾 Export to Excel</button>
-            <button class="btn btn-primary" onclick="exportToCSV()">📄 Export to CSV</button>
-            <button class="btn btn-secondary" onclick="showTeacherMenu()">⬅️ Back</button>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="exportToExcel()" style="flex: 1;">💾 Export to Excel</button>
+                <button class="btn btn-primary" onclick="exportToCSV()" style="flex: 1;">📄 Export to CSV</button>
+                <button class="btn btn-secondary" onclick="showTeacherMenu()" style="flex: 1;">⬅️ Back</button>
+            </div>
+        </div>
+
+        <!-- PREGUNTAS INCORRECTAS -->
+        <div id="wrong-answers-screen" class="card hidden">
+            <div class="header">
+                <h1>Wrong Answers Review 📝</h1>
+                <p>Learn from your mistakes</p>
+            </div>
+            
+            <div id="wrong-answers-container">
+                <!-- Las preguntas incorrectas se cargan aquí -->
+            </div>
+            
+            <button class="btn btn-secondary" onclick="showResultsScreen()">⬅️ Back to Results</button>
         </div>
     </div>
 
@@ -518,6 +566,7 @@
         let wrongQuestions = [];
         let currentLanguage = 'en';
         let studentData = { name: '', doc: '' };
+        let teacherCredentials = { username: 'Coach', password: '19082008' };
 
         // ---------- FUNCIONES DE NAVEGACIÓN ----------
         function showScreen(screenName) {
@@ -527,6 +576,7 @@
             document.getElementById('results-screen').classList.add('hidden');
             document.getElementById('teacher-menu').classList.add('hidden');
             document.getElementById('ranking-screen').classList.add('hidden');
+            document.getElementById('wrong-answers-screen').classList.add('hidden');
             
             document.getElementById(screenName + '-screen').classList.remove('hidden');
             currentScreen = screenName;
@@ -540,13 +590,21 @@
             showScreen('teacher-login');
         }
 
+        function showTeacherMenu() {
+            showScreen('teacher-menu');
+        }
+
+        function showResultsScreen() {
+            showScreen('results');
+        }
+
         // ---------- FUNCIONES DEL QUIZ ----------
         function startQuiz() {
-            const name = document.getElementById('name-select').value;
-            const doc = document.getElementById('doc-select').value;
+            const name = document.getElementById('name-input').value.trim();
+            const doc = document.getElementById('doc-input').value.trim();
             
             if (!name || !doc) {
-                alert('Please select your name and ID.');
+                alert('Please enter your full name and student ID.');
                 return;
             }
             
@@ -710,8 +768,32 @@
             
             showScreen('results');
             
-            // Guardar resultado (simulado - en navegador)
+            // Guardar resultado
             saveResult(studentData.name, studentData.doc, score, percentage, roundedScore);
+        }
+
+        function showWrongAnswers() {
+            const container = document.getElementById('wrong-answers-container');
+            container.innerHTML = '';
+            
+            if (wrongQuestions.length === 0) {
+                container.innerHTML = '<p>No wrong answers to review.</p>';
+            } else {
+                wrongQuestions.forEach((wq, index) => {
+                    const wrongAnswerDiv = document.createElement('div');
+                    wrongAnswerDiv.className = 'wrong-answer-item';
+                    wrongAnswerDiv.innerHTML = `
+                        <h4>Question ${wq.number}</h4>
+                        <p><strong>English:</strong> ${wq.question_en}</p>
+                        <p><strong>Español:</strong> ${wq.question_es}</p>
+                        <p style="color: #e74c3c;"><strong>Your answer:</strong> ${wq.user_answer}</p>
+                        <p style="color: #27ae60;"><strong>Correct answer:</strong> ${wq.correct_answer}</p>
+                    `;
+                    container.appendChild(wrongAnswerDiv);
+                });
+            }
+            
+            showScreen('wrong-answers');
         }
 
         // ---------- FUNCIONES DE PROFESOR ----------
@@ -719,30 +801,25 @@
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
-            // Credenciales por defecto
-            if (username === 'Coach' && password === '19082008') {
+            if (username === teacherCredentials.username && password === teacherCredentials.password) {
                 showTeacherMenu();
             } else {
                 alert('Invalid credentials. Please try again.');
-                document.getElementById('username').value = '';
-                document.getElementById('password').value = '';
             }
         }
 
-        function showTeacherMenu() {
-            showScreen('teacher-menu');
-        }
-
         function changeUsername() {
-            const newUsername = prompt('Enter new username:');
-            if (newUsername) {
+            const newUsername = prompt('Enter new username:', teacherCredentials.username);
+            if (newUsername && newUsername.trim()) {
+                teacherCredentials.username = newUsername.trim();
                 alert('Username updated successfully!');
             }
         }
 
         function changePassword() {
-            const newPassword = prompt('Enter new password:');
-            if (newPassword) {
+            const newPassword = prompt('Enter new password:', teacherCredentials.password);
+            if (newPassword && newPassword.trim()) {
+                teacherCredentials.password = newPassword.trim();
                 alert('Password updated successfully!');
             }
         }
@@ -750,7 +827,7 @@
         function deleteDatabase() {
             if (confirm('Are you sure you want to delete ALL student results?\nThis action cannot be undone.')) {
                 localStorage.removeItem('quizResults');
-                alert('Database cleared successfully!');
+                alert('All results deleted successfully!');
             }
         }
 
@@ -770,6 +847,7 @@
                             <th>Score</th>
                             <th>Percentage</th>
                             <th>Rounded</th>
+                            <th>Date</th>
                         </tr>
                 `;
                 
@@ -781,6 +859,8 @@
                     else if (index === 1) rowClass = 'silver';
                     else if (index === 2) rowClass = 'bronze';
                     
+                    const date = new Date(result.timestamp).toLocaleDateString();
+                    
                     html += `
                         <tr class="${rowClass}">
                             <td>${index + 1}</td>
@@ -789,6 +869,7 @@
                             <td>${result.score}</td>
                             <td>${result.percentage}%</td>
                             <td><strong>${result.roundedScore}</strong></td>
+                            <td>${date}</td>
                         </tr>
                     `;
                 });
@@ -819,25 +900,60 @@
         }
 
         function exportToExcel() {
-            alert('Excel export functionality would be implemented here.');
+            const results = getResults();
+            if (results.length === 0) {
+                alert('No results to export.');
+                return;
+            }
+            
+            let csvContent = "Name,ID,Score,Percentage,Rounded Score,Date\n";
+            results.forEach(result => {
+                const date = new Date(result.timestamp).toLocaleDateString();
+                csvContent += `"${result.name}","${result.doc}",${result.score},${result.percentage},${result.roundedScore},${date}\n`;
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'VetQuiz_Results.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+            
+            alert('Results exported as CSV file!');
         }
 
         function exportToCSV() {
-            alert('CSV export functionality would be implemented here.');
-        }
-
-        function showWrongAnswers() {
-            let message = 'Wrong Answers Review:\n\n';
-            wrongQuestions.forEach((wq, index) => {
-                message += `Q${wq.number}: ${wq.question_en}\n`;
-                message += `Your answer: ${wq.user_answer}\n`;
-                message += `Correct answer: ${wq.correct_answer}\n\n`;
-            });
-            alert(message);
+            exportToExcel(); // Misma función para CSV
         }
 
         // Inicializar
         showStartScreen();
+
+        // Event listeners para Enter key
+        document.getElementById('name-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('doc-input').focus();
+            }
+        });
+
+        document.getElementById('doc-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                startQuiz();
+            }
+        });
+
+        document.getElementById('username').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('password').focus();
+            }
+        });
+
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verifyLogin();
+            }
+        });
     </script>
 </body>
 </html>
