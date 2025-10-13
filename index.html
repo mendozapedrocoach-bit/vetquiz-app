@@ -274,7 +274,7 @@
         </div>
 
         <!-- PANTALLA DE LOGIN PROFESOR -->
-        <div id="teacher-login" class="card hidden">
+        <div id="teacher-login-screen" class="card hidden">
             <div class="header">
                 <h1>Teacher Login 🧑‍🏫</h1>
             </div>
@@ -334,7 +334,7 @@
         </div>
 
         <!-- MENÚ PROFESOR -->
-        <div id="teacher-menu" class="card hidden">
+        <div id="teacher-menu-screen" class="card hidden">
             <div class="header">
                 <h1>Teacher Menu 🧑‍🏫</h1>
                 <p>Administrative Panel</p>
@@ -549,19 +549,16 @@
         let studentData = { name: '', doc: '' };
         let teacherCredentials = { username: 'Coach', password: '19082008' };
 
-        // ---------- FUNCIONES DE NAVEGACIÓN ----------
+        // ---------- FUNCIONES DE NAVEGACIÓN SIMPLIFICADAS ----------
         function showScreen(screenName) {
             // Ocultar todas las pantallas
-            const screens = ['start', 'teacher-login', 'quiz', 'results', 'teacher-menu', 'ranking', 'wrong-answers'];
-            screens.forEach(screen => {
-                const element = document.getElementById(screen + '-screen');
-                if (element) {
-                    element.classList.add('hidden');
-                }
+            const allScreens = document.querySelectorAll('.card');
+            allScreens.forEach(screen => {
+                screen.classList.add('hidden');
             });
             
             // Mostrar la pantalla solicitada
-            const targetScreen = document.getElementById(screenName + '-screen');
+            const targetScreen = document.getElementById(screenName);
             if (targetScreen) {
                 targetScreen.classList.remove('hidden');
                 currentScreen = screenName;
@@ -569,19 +566,19 @@
         }
 
         function showStartScreen() {
-            showScreen('start');
+            showScreen('start-screen');
         }
 
         function showTeacherLogin() {
-            showScreen('teacher-login');
+            showScreen('teacher-login-screen');
         }
 
         function showTeacherMenu() {
-            showScreen('teacher-menu');
+            showScreen('teacher-menu-screen');
         }
 
         function showResultsScreen() {
-            showScreen('results');
+            showScreen('results-screen');
         }
 
         // ---------- FUNCIONES DEL QUIZ ----------
@@ -604,7 +601,7 @@
             wrongQuestions = [];
             currentLanguage = 'en';
             
-            showScreen('quiz');
+            showScreen('quiz-screen');
             loadQuestion();
         }
 
@@ -752,7 +749,7 @@
             // Mostrar botón de respuestas incorrectas si hay
             document.getElementById('wrong-answers-btn').classList.toggle('hidden', wrongQuestions.length === 0);
             
-            showScreen('results');
+            showScreen('results-screen');
             
             // Guardar resultado
             saveResult(studentData.name, studentData.doc, score, percentage, roundedScore);
@@ -779,7 +776,7 @@
                 });
             }
             
-            showScreen('wrong-answers');
+            showScreen('wrong-answers-screen');
         }
 
         // ---------- FUNCIONES DE PROFESOR ----------
@@ -867,7 +864,7 @@
                 container.innerHTML = html;
             }
             
-            showScreen('ranking');
+            showScreen('ranking-screen');
         }
 
         // ---------- ALMACENAMIENTO (localStorage) ----------
@@ -913,7 +910,7 @@
         }
 
         function exportToCSV() {
-            exportToExcel(); // Misma función para CSV
+            exportToExcel();
         }
 
         // Inicializar
