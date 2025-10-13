@@ -231,19 +231,6 @@
         .silver { background: #F5F5F5 !important; }
         .bronze { background: #FFE0B2 !important; }
         
-        .teacher-credentials {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border-left: 4px solid #3498db;
-        }
-        
-        .teacher-credentials h4 {
-            color: #2c3e50;
-            margin-bottom: 8px;
-        }
-        
         .wrong-answers-list {
             max-height: 300px;
             overflow-y: auto;
@@ -284,12 +271,6 @@
             
             <button class="btn btn-primary" onclick="startQuiz()">Start Quiz</button>
             <button class="btn btn-secondary" onclick="showTeacherLogin()">Teacher Access</button>
-            
-            <div class="teacher-credentials">
-                <h4>Teacher Access Info:</h4>
-                <p><strong>Username:</strong> Coach</p>
-                <p><strong>Password:</strong> 19082008</p>
-            </div>
         </div>
 
         <!-- PANTALLA DE LOGIN PROFESOR -->
@@ -300,12 +281,12 @@
             
             <div class="input-group">
                 <label for="username">Username:</label>
-                <input type="text" id="username" class="text-input" placeholder="Enter username" value="Coach">
+                <input type="text" id="username" class="text-input" placeholder="Enter username">
             </div>
             
             <div class="input-group">
                 <label for="password">Password:</label>
-                <input type="password" id="password" class="text-input" placeholder="Enter password" value="19082008">
+                <input type="password" id="password" class="text-input" placeholder="Enter password">
             </div>
             
             <button class="btn btn-primary" onclick="verifyLogin()">Login</button>
@@ -570,16 +551,21 @@
 
         // ---------- FUNCIONES DE NAVEGACIÓN ----------
         function showScreen(screenName) {
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('teacher-login').classList.add('hidden');
-            document.getElementById('quiz-screen').classList.add('hidden');
-            document.getElementById('results-screen').classList.add('hidden');
-            document.getElementById('teacher-menu').classList.add('hidden');
-            document.getElementById('ranking-screen').classList.add('hidden');
-            document.getElementById('wrong-answers-screen').classList.add('hidden');
+            // Ocultar todas las pantallas
+            const screens = ['start', 'teacher-login', 'quiz', 'results', 'teacher-menu', 'ranking', 'wrong-answers'];
+            screens.forEach(screen => {
+                const element = document.getElementById(screen + '-screen');
+                if (element) {
+                    element.classList.add('hidden');
+                }
+            });
             
-            document.getElementById(screenName + '-screen').classList.remove('hidden');
-            currentScreen = screenName;
+            // Mostrar la pantalla solicitada
+            const targetScreen = document.getElementById(screenName + '-screen');
+            if (targetScreen) {
+                targetScreen.classList.remove('hidden');
+                currentScreen = screenName;
+            }
         }
 
         function showStartScreen() {
@@ -805,6 +791,9 @@
                 showTeacherMenu();
             } else {
                 alert('Invalid credentials. Please try again.');
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+                document.getElementById('username').focus();
             }
         }
 
@@ -817,7 +806,7 @@
         }
 
         function changePassword() {
-            const newPassword = prompt('Enter new password:', teacherCredentials.password);
+            const newPassword = prompt('Enter new password:');
             if (newPassword && newPassword.trim()) {
                 teacherCredentials.password = newPassword.trim();
                 alert('Password updated successfully!');
