@@ -822,47 +822,38 @@
             showScreen('wrong-answers-screen');
         }
 
-        // ========== FUNCIONES DE GOOGLE SHEETS ==========
-        async function saveToGoogleSheets(data) {
-            try {
-                // Si no hay URL configurada, usar localStorage
-                if (GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
-                    return { success: false, error: 'Google Script not configured' };
-                }
-                
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: 'saveResult',
-                        data: data
-                    })
-                });
-                
-                const result = await response.json();
-                return result;
-            } catch (error) {
-                console.error('Error saving to Google Sheets:', error);
-                return { success: false, error: error.message };
-            }
-        }
+      // ========== FUNCIONES DE GOOGLE SHEETS ==========
+async function saveToGoogleSheets(data) {
+    try {
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: 'saveResult',
+                data: data
+            })
+        });
+        
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.error('Error saving to Google Sheets:', error);
+        return { success: false, error: error.message };
+    }
+}
 
-        async function getResultsFromGoogleSheets() {
-            try {
-                if (GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
-                    return getResultsFromLocalStorage();
-                }
-                
-                const response = await fetch(`${GOOGLE_SCRIPT_URL}?action=getResults&timestamp=${Date.now()}`);
-                const results = await response.json();
-                return results;
-            } catch (error) {
-                console.error('Error getting results from Google Sheets:', error);
-                return getResultsFromLocalStorage();
-            }
-        }
+async function getResultsFromGoogleSheets() {
+    try {
+        const response = await fetch(`${GOOGLE_SCRIPT_URL}?action=getResults&timestamp=${Date.now()}`);
+        const results = await response.json();
+        return results;
+    } catch (error) {
+        console.error('Error getting results from Google Sheets:', error);
+        return getResultsFromLocalStorage();
+    }
+}
 
         async function deleteAllResultsFromGoogleSheets() {
             try {
