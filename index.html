@@ -3,866 +3,308 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VetQuizApp - U.P.T.N.T. Manuela Saenz</title>
+    <title>Sistema de Evaluación</title>
     <style>
+        /* Tus estilos CSS permanecen igual */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-        }
-        
-        body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 15px;
-            color: #333;
+            padding: 20px;
         }
-        
+
         .container {
-            max-width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
-        }
-        
-        .card {
             background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
-        
+
         .header {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 30px;
             text-align: center;
-            margin-bottom: 25px;
         }
-        
+
         .header h1 {
-            color: #2c3e50;
-            font-size: 24px;
+            font-size: 2.5em;
             margin-bottom: 10px;
         }
-        
-        .header p {
-            color: #7f8c8d;
-            font-size: 16px;
+
+        .content {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
         }
-        
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
         }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
+
+        .card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            border-left: 5px solid #4CAF50;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
-        
-        .btn-success {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-            color: white;
-        }
-        
-        .btn-warning {
-            background: linear-gradient(135deg, #f39c12, #e67e22);
-            color: white;
-        }
-        
-        .btn-danger {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-        }
-        
-        .btn-secondary {
-            background: #95a5a6;
-            color: white;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .input-group {
+
+        .form-group {
             margin-bottom: 20px;
         }
-        
-        .input-group label {
+
+        .form-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #2c3e50;
+            color: #555;
         }
-        
-        .text-input, .select-input {
+
+        .form-group input {
             width: 100%;
-            padding: 15px;
+            padding: 12px 15px;
             border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 16px;
-            background: white;
-            font-family: inherit;
         }
-        
-        .text-input:focus, .select-input:focus {
-            border-color: #3498db;
-            outline: none;
-        }
-        
-        .question {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            border-left: 5px solid #3498db;
-        }
-        
-        .question h3 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-            font-size: 18px;
-            line-height: 1.4;
-        }
-        
-        .option-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin: 8px 0;
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 16px;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .option-btn:hover {
-            border-color: #3498db;
-            background: #f0f8ff;
-        }
-        
-        .option-btn.selected {
-            border-color: #2ecc71;
-            background: #d5f4e6;
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #ecf0f1;
-            border-radius: 10px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-            border-radius: 10px;
-            transition: width 0.3s;
-        }
-        
-        .results {
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .score {
-            font-size: 48px;
-            font-weight: bold;
-            color: #2ecc71;
-            margin: 20px 0;
-        }
-        
-        .emoji {
-            font-size: 60px;
-            margin-bottom: 20px;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        .language-btn {
-            background: #9b59b6;
+
+        .btn {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
             color: white;
             border: none;
-            padding: 10px 15px;
+            padding: 15px 30px;
             border-radius: 8px;
+            font-size: 16px;
             cursor: pointer;
-            font-size: 14px;
+            width: 100%;
+            margin-top: 10px;
         }
-        
-        .ranking-table {
+
+        .results-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 14px;
+            margin-top: 20px;
         }
-        
-        .ranking-table th,
-        .ranking-table td {
-            padding: 10px;
+
+        .results-table th,
+        .results-table td {
+            padding: 12px 15px;
             text-align: left;
-            border-bottom: 1px solid #ecf0f1;
+            border-bottom: 1px solid #e0e0e0;
         }
-        
-        .ranking-table th {
-            background: #34495e;
+
+        .results-table th {
+            background: #4CAF50;
             color: white;
-        }
-        
-        .ranking-table tr:nth-child(even) {
-            background: #f8f9fa;
-        }
-        
-        .gold { background: #FFF9C4 !important; }
-        .silver { background: #F5F5F5 !important; }
-        .bronze { background: #FFE0B2 !important; }
-        
-        .wrong-answers-list {
-            max-height: 300px;
-            overflow-y: auto;
-            margin: 15px 0;
-            padding: 10px;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            background: #f8f9fa;
-        }
-        
-        .wrong-answer-item {
-            padding: 10px;
-            margin: 8px 0;
-            background: white;
-            border-radius: 8px;
-            border-left: 4px solid #e74c3c;
-        }
-
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 3px solid #3498db;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
 
         .alert {
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
         }
 
         .alert-success {
             background: #d4edda;
             color: #155724;
-            border: 1px solid #c3e6cb;
         }
 
         .alert-error {
             background: #f8d7da;
             color: #721c24;
-            border: 1px solid #f5c6cb;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- PANTALLA DE INICIO -->
-        <div id="start-screen" class="card">
-            <div class="header">
-                <h1>Welcome to VetQuizApp 🩺</h1>
-                <p>U.P.T.N.T. Manuela Saenz</p>
-            </div>
-            
-            <div class="input-group">
-                <label for="name-input">Full Name:</label>
-                <input type="text" id="name-input" class="text-input" placeholder="Enter your full name">
-            </div>
-            
-            <div class="input-group">
-                <label for="doc-input">Student ID:</label>
-                <input type="text" id="doc-input" class="text-input" placeholder="Enter your student ID">
-            </div>
-            
-            <button class="btn btn-primary" onclick="startQuiz()">Start Quiz</button>
-            <button class="btn btn-secondary" onclick="showTeacherLogin()">Teacher Access</button>
-            
-            <div id="start-alert"></div>
+        <div class="header">
+            <h1>🏫 Sistema de Evaluación</h1>
+            <p>Registro y consulta de resultados de pruebas en línea</p>
         </div>
 
-        <!-- PANTALLA DE LOGIN PROFESOR -->
-        <div id="teacher-login-screen" class="card hidden">
-            <div class="header">
-                <h1>Teacher Login 🧑‍🏫</h1>
-            </div>
-            
-            <div class="input-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" class="text-input" placeholder="Enter username">
-            </div>
-            
-            <div class="input-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" class="text-input" placeholder="Enter password">
-            </div>
-            
-            <button class="btn btn-primary" id="login-btn" onclick="verifyLogin()">Login</button>
-            <button class="btn btn-secondary" onclick="showStartScreen()">Back to Main Menu</button>
-            
-            <div id="login-alert"></div>
-        </div>
+        <div class="content">
+            <!-- Formulario para guardar resultados -->
+            <div class="card">
+                <h2>📊 Registrar Resultado</h2>
+                <form id="resultForm">
+                    <div class="form-group">
+                        <label for="name">Nombre completo:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
 
-        <!-- PANTALLA DE QUIZ -->
-        <div id="quiz-screen" class="card hidden">
-            <div class="header">
-                <h3 id="question-number">Question 1/10</h3>
-                <button class="language-btn" onclick="toggleLanguage()" id="language-btn">🌐 Español</button>
-            </div>
-            
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill" style="width: 10%"></div>
-            </div>
-            
-            <div class="question">
-                <h3 id="question-text">Loading question...</h3>
-            </div>
-            
-            <div id="options-container">
-                <!-- Las opciones se cargan aquí dinámicamente -->
-            </div>
-            
-            <div style="display: flex; gap: 10px; margin-top: 20px;">
-                <button class="btn btn-secondary" onclick="prevQuestion()" id="prev-btn" style="flex: 1;">← Back</button>
-                <button class="btn btn-primary" onclick="nextQuestion()" id="next-btn" style="flex: 1;">Next →</button>
-                <button class="btn btn-success hidden" onclick="finishQuiz()" id="finish-btn" style="flex: 1;">Finish Quiz</button>
-            </div>
-        </div>
+                    <div class="form-group">
+                        <label for="doc">Documento de identidad:</label>
+                        <input type="text" id="doc" name="doc" required>
+                    </div>
 
-        <!-- PANTALLA DE RESULTADOS -->
-        <div id="results-screen" class="card hidden">
-            <div class="results">
-                <div class="emoji" id="result-emoji">🎯</div>
-                <h2 id="result-text">Quiz Completed!</h2>
-                <div class="score" id="final-score">0/20</div>
-                <p id="student-info"></p>
+                    <div class="form-group">
+                        <label for="score">Puntaje obtenido:</label>
+                        <input type="number" id="score" name="score" required min="0" step="0.1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="percentage">Porcentaje (%):</label>
+                        <input type="number" id="percentage" name="percentage" required min="0" max="100" step="0.1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="roundedScore">Puntaje redondeado:</label>
+                        <input type="number" id="roundedScore" name="roundedScore" required min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="wrongAnswers">Respuestas incorrectas:</label>
+                        <input type="number" id="wrongAnswers" name="wrongAnswers" required min="0">
+                    </div>
+
+                    <button type="submit" class="btn">💾 Guardar Resultado</button>
+                </form>
+
+                <div id="formMessage"></div>
+            </div>
+
+            <!-- Panel de resultados -->
+            <div class="card">
+                <h2>📈 Resultados Guardados</h2>
+
+                <button onclick="loadResults()" class="btn">🔄 Actualizar Lista</button>
+                <button onclick="deleteAllResults()" class="btn" style="background: #f44336;">🗑️ Eliminar Todos</button>
+
+                <div id="resultsMessage"></div>
                 
-                <div id="save-alert"></div>
-                
-                <button class="btn btn-primary" onclick="showStartScreen()">Return to Main Menu</button>
-                <button class="btn btn-success" onclick="startQuiz()">Restart Quiz</button>
-                <button class="btn btn-danger hidden" onclick="showWrongAnswers()" id="wrong-answers-btn">❌ View Wrong Answers</button>
+                <div id="resultsContainer">
+                    <div id="loadingResults">Cargando resultados...</div>
+                    <table class="results-table" id="resultsTable" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Documento</th>
+                                <th>Puntaje</th>
+                                <th>%</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsBody"></tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-
-        <!-- MENÚ PROFESOR -->
-        <div id="teacher-menu-screen" class="card hidden">
-            <div class="header">
-                <h1>Teacher Menu 🧑‍🏫</h1>
-                <p>Administrative Panel</p>
-            </div>
-            
-            <button class="btn btn-primary" onclick="viewRanking()">📊 View Results & Ranking</button>
-            <button class="btn btn-warning" onclick="changeUsername()">📝 Change Username</button>
-            <button class="btn btn-warning" onclick="changePassword()">🔑 Change Password</button>
-            <button class="btn btn-danger" onclick="deleteDatabase()">🗑️ Delete All Results</button>
-            <button class="btn btn-secondary" onclick="showStartScreen()">⬅️ Back to Main Menu</button>
-            
-            <div id="teacher-alert"></div>
-        </div>
-
-        <!-- RANKING Y RESULTADOS -->
-        <div id="ranking-screen" class="card hidden">
-            <div class="header">
-                <h1>Student Ranking 📊</h1>
-                <p>All quiz results</p>
-            </div>
-            
-            <div id="ranking-table-container">
-                <!-- La tabla de ranking se carga aquí -->
-            </div>
-            
-            <div style="display: flex; gap: 10px; margin-top: 20px;">
-                <button class="btn btn-primary" onclick="exportToCSV()" style="flex: 1;">📄 Export to CSV</button>
-                <button class="btn btn-secondary" onclick="showTeacherMenu()" style="flex: 1;">⬅️ Back</button>
-            </div>
-            
-            <div id="ranking-alert"></div>
-        </div>
-
-        <!-- PREGUNTAS INCORRECTAS -->
-        <div id="wrong-answers-screen" class="card hidden">
-            <div class="header">
-                <h1>Wrong Answers Review 📝</h1>
-                <p>Learn from your mistakes</p>
-            </div>
-            
-            <div id="wrong-answers-container">
-                <!-- Las preguntas incorrectas se cargan aquí -->
-            </div>
-            
-            <button class="btn btn-secondary" onclick="showResultsScreen()">⬅️ Back to Results</button>
         </div>
     </div>
 
     <script>
-        // ========== CONFIGURACIÓN GOOGLE APPS SCRIPT ==========
-        // REEMPLAZA ESTA URL CON LA DE TU GOOGLE APPS SCRIPT
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzNGmQGkzpzSpyZneet2P0GDpCLUhJGuT4cqT6YOreTpCHYfRufCH1QGHztDpwb_CcYlg/exec';
+        // ⚠️ REEMPLAZA CON LA URL DE TU GOOGLE APPS SCRIPT
+        const SCRIPT_URL = 'App web: https://script.google.com/macros/s/AKfycby6WEfrHLtd0o-P1vEkX6Rz3_ySuFqVGx6odOMlh8lzkcHCHCx6yhSmmiga7gfjWn61lQ/exec';
 
-        // ========== PREGUNTAS DEL QUIZ ==========
-        const questions = [
-            // Preguntas 1-25 (simples)
-            {"en": "Produce hides widely used in the leather industry.", 
-             "es": "Produce cueros ampliamente utilizados en la industria del cuero.",
-             "answer": "Cattle", "number": 1},
-            {"en": "Have no teeth; they grind food in the gizzard.", 
-             "es": "No tienen dientes; trituran la comida en la molleja.",
-             "answer": "Poultry", "number": 2},
-            {"en": "Gestation period famously called '3 months, 3 weeks, 3 days.'", 
-             "es": "Periodo de gestación famosamente llamado '3 meses, 3 semanas, 3 días.'",
-             "answer": "Pigs", "number": 3},
-            {"en": "Often raised in flocks for grazing in open pastures.", 
-             "es": "Suelen criarse en rebaños para pastar en pastizales abiertos.",
-             "answer": "Sheep", "number": 4},
-            {"en": "Iconic breeds include Angus, Holstein, and Hereford.", 
-             "es": "Las razas icónicas incluyen Angus, Holstein y Hereford.",
-             "answer": "Cattle", "number": 5},
-            {"en": "Laying hens produce around 250–300 eggs per year.", 
-             "es": "Las gallinas ponedoras producen alrededor de 250-300 huevos por año.",
-             "answer": "Poultry", "number": 6},
-            {"en": "Provide pork cuts such as ham, bacon, and ribs.", 
-             "es": "Proporcionan cortes de cerdo como jamón, tocino y costillas.",
-             "answer": "Pigs", "number": 7},
-            {"en": "Milk is mainly used for cheese like Roquefort or Manchego.", 
-             "es": "La leche se utiliza principalmente para quesos como Roquefort o Manchego.",
-             "answer": "Sheep", "number": 8},
-            {"en": "Excellent climbers, able to move on rocky and steep terrain.", 
-             "es": "Excelentes trepadores, capaces de moverse en terrenos rocosos y empinados.",
-             "answer": "Goats", "number": 9},
-            {"en": "Produce wool that must be sheared at least once a year.", 
-             "es": "Producen lana que debe esquilarse al menos una vez al año.",
-             "answer": "Sheep", "number": 10},
-            {"en": "Provide both eggs and white meat as main products.", 
-             "es": "Proporcionan tanto huevos como carne blanca como productos principales.",
-             "answer": "Poultry", "number": 11},
-            {"en": "Main source of beef and dairy products.", 
-             "es": "Fuente principal de carne de res y productos lácteos.",
-             "answer": "Cattle", "number": 12},
-            {"en": "Have a sensitive snout used for rooting in soil.", 
-             "es": "Tienen un hocico sensible utilizado para hozar en el suelo.",
-             "answer": "Pigs", "number": 13},
-            {"en": "Produce highly nutritious milk, often used for specialty cheeses.", 
-             "es": "Producen leche altamente nutritiva, a menudo utilizada para quesos especiales.",
-             "answer": "Goats", "number": 14},
-            {"en": "Broiler breeds like Cornish Cross grow to market weight in 6–8 weeks.", 
-             "es": "Las razas de pollos de engorde como Cornish Cross alcanzan el peso de mercado en 6-8 semanas.",
-             "answer": "Poultry", "number": 15},
-            {"en": "Can weigh over 1,200 kg in some breeds.", 
-             "es": "Pueden pesar más de 1,200 kg en algunas razas.",
-             "answer": "Cattle", "number": 16},
-            {"en": "Breeds include Merino and Suffolk, known for fine wool.", 
-             "es": "Las razas incluyen Merino y Suffolk, conocidas por su lana fina.",
-             "answer": "Sheep", "number": 17},
-            {"en": "Beards and horns are common in both males and females.", 
-             "es": "Las barbas y los cuernos son comunes tanto en machos como en hembras.",
-             "answer": "Goats", "number": 18},
-            {"en": "Extremely intelligent, capable of learning tricks and solving problems.", 
-             "es": "Extremadamente inteligentes, capaces de aprender trucos y resolver problemas.",
-             "answer": "Pigs", "number": 19},
-            {"en": "Breeds like Boer (meat) and Saanen (milk) are widely recognized.", 
-             "es": "Razas como Boer (carne) y Saanen (leche) son ampliamente reconocidas.",
-             "answer": "Goats", "number": 20},
-            {"en": "Tail docking is a common management practice.", 
-             "es": "El corte de cola es una práctica de manejo común.",
-             "answer": "Sheep", "number": 21},
-            {"en": "Have four stomach compartments for digesting grass.", 
-             "es": "Tienen cuatro compartimentos estomacales para digerir hierba.",
-             "answer": "Cattle", "number": 22},
-            {"en": "Very curious and mischievous behavior.", 
-             "es": "Comportamiento muy curioso y travieso.",
-             "answer": "Goats", "number": 23},
-            {"en": "Breeds include Yorkshire and Duroc, common in commercial farming.", 
-             "es": "Las razas incluyen Yorkshire y Duroc, comunes en la ganadería comercial.",
-             "answer": "Pigs", "number": 24},
-            {"en": "Chickens have a comb and wattles as distinctive features.", 
-             "es": "Los pollos tienen cresta y barbillas como características distintivas.",
-             "answer": "Poultry", "number": 25},
-            
-            // Preguntas 26-50 (con órganos)
-            {"en": "This organ has four compartments: rumen, reticulum, omasum, and abomasum. It allows the animal to digest fiber efficiently.", 
-             "es": "Este órgano tiene cuatro compartimentos: rumen, retículo, omaso y abomaso. Permite al animal digerir fibra eficientemente.",
-             "answer": "Cow (Bovine stomach)", "number": 26},
-            {"en": "This organ is long and spiral-shaped, specialized for absorbing nutrients in monogastric animals.", 
-             "es": "Este órgano es largo y en forma de espiral, especializado para absorber nutrientes en animales monogástricos.",
-             "answer": "Pig (Small intestine)", "number": 27},
-            {"en": "This organ is small and bean-shaped, filtering nitrogen waste in uric acid instead of urea.", 
-             "es": "Este órgano es pequeño y con forma de frijol, filtra desechos nitrogenados en ácido úrico en lugar de urea.",
-             "answer": "Poultry (Kidney)", "number": 28},
-            {"en": "This organ produces lanolin and helps regulate body temperature through wool follicles.", 
-             "es": "Este órgano produce lanolina y ayuda a regular la temperatura corporal a través de los folículos de lana.",
-             "answer": "Sheep (Skin)", "number": 29},
-            {"en": "This organ is bilobed and produces enzymes for milk digestion in young ruminants.", 
-             "es": "Este órgano es bilobulado y produce enzimas para la digestión de la leche en rumiantes jóvenes.",
-             "answer": "Goat (Abomasum in kids)", "number": 30},
-            {"en": "This muscular organ grinds food with the help of grit and stones swallowed by the animal.", 
-             "es": "Este órgano muscular tritura la comida con la ayuda de arenilla y piedras tragadas por el animal.",
-             "answer": "Poultry (Gizzard)", "number": 31},
-            {"en": "This organ has a large cecum that ferments fibrous plant material, though not as big as in horses.", 
-             "es": "Este órgano tiene un ciego grande que fermenta material vegetal fibroso, aunque no tan grande como en los caballos.",
-             "answer": "Pig (Cecum)", "number": 32},
-            {"en": "This organ has horizontal pupils, giving a wide field of vision to detect predators.", 
-             "es": "Este órgano tiene pupilas horizontales, dando un amplio campo de visión para detectar depredadores.",
-             "answer": "Goat (Eyes)", "number": 33},
-            {"en": "This organ is massive in size, taking up much of the abdominal cavity and responsible for rumination.", 
-             "es": "Este órgano es masivo en tamaño, ocupa gran parte de la cavidad abdominal y es responsable de la rumia.",
-             "answer": "Cow (Rumen)", "number": 34},
-            {"en": "This organ has air sacs that extend into bones, making respiration highly efficient.", 
-             "es": "Este órgano tiene sacos aéreos que se extienden hasta los huesos, haciendo la respiración altamente eficiente.",
-             "answer": "Poultry (Respiratory system)", "number": 35},
-            {"en": "This organ in males is spiral-shaped and adapted for quick copulation.", 
-             "es": "Este órgano en los machos tiene forma espiral y está adaptado para una cópula rápida.",
-             "answer": "Sheep (Penis)", "number": 36},
-            {"en": "This organ has strong canines and molars adapted for crushing hard grains and mastication.", 
-             "es": "Este órgano tiene caninos y molares fuertes adaptados para triturar granos duros y masticar.",
-             "answer": "Pig (Teeth)", "number": 37},
-            {"en": "This organ secretes wax that protects the ear canal and is particularly large in dairy animals.", 
-             "es": "Este órgano secreta cera que protege el canal auditivo y es particularmente grande en animales lecheros.",
-             "answer": "Cow (Ear gland system)", "number": 38},
-            {"en": "This organ produces eggs covered with a calcium shell, unique among domestic animals.", 
-             "es": "Este órgano produce huevos cubiertos con una cáscara de calcio, único entre los animales domésticos.",
-             "answer": "Poultry (Ovary/Oviduct)", "number": 39},
-            {"en": "This organ has a large rumen but is relatively smaller compared to cattle, making them more selective feeders.", 
-             "es": "Este órgano tiene un rumen grande pero relativamente más pequeño en comparación con el ganado, lo que los hace alimentadores más selectivos.",
-             "answer": "Goat (Stomach)", "number": 40},
-            {"en": "This organ is double-lobed, producing bile but lacking a gall bladder in some species.", 
-             "es": "Este órgano es bilobulado, produce bilis pero carece de vesícula biliar en algunas especies.",
-             "answer": "Sheep (Liver)", "number": 41},
-            {"en": "This organ has a spiral colon that improves absorption in omnivores.", 
-             "es": "Este órgano tiene un colon espiral que mejora la absorción en omnívoros.",
-             "answer": "Pig (Large intestine)", "number": 42},
-            {"en": "This organ is responsible for producing milk with high butterfat content compared to other ruminants.", 
-             "es": "Este órgano es responsable de producir leche con alto contenido de grasa butírica en comparación con otros rumiantes.",
-             "answer": "Sheep (Mammary gland)", "number": 43},
-            {"en": "This organ is strong and muscular, pumping blood through a four-chambered structure in all livestock species.", 
-             "es": "Este órgano es fuerte y muscular, bombea sangre a través de una estructura de cuatro cámaras en todas las especies de ganado.",
-             "answer": "Cow (Heart)", "number": 44},
-            {"en": "This organ filters blood but has a long, slender shape in ruminants.", 
-             "es": "Este órgano filtra la sangre pero tiene una forma larga y delgada en rumiantes.",
-             "answer": "Goat (Spleen)", "number": 45},
-            {"en": "This organ has a crop where food is temporarily stored before digestion.", 
-             "es": "Este órgano tiene un buche donde la comida se almacena temporalmente antes de la digestión.",
-             "answer": "Poultry (Crop)", "number": 46},
-            {"en": "This organ has horns that curve outward in males, used for defense and dominance.", 
-             "es": "Este órgano tiene cuernos que se curvan hacia afuera en los machos, utilizados para defensa y dominancia.",
-             "answer": "Goat (Horn)", "number": 47},
-            {"en": "This organ can produce large amounts of saliva—up to 150 liters a day for digestion.", 
-             "es": "Este órgano puede producir grandes cantidades de saliva—hasta 150 litros al día para la digestión.",
-             "answer": "Cow (Salivary glands)", "number": 48},
-            {"en": "This organ produces thick skin that is often used for leather and hides.", 
-             "es": "Este órgano produce piel gruesa que a menudo se utiliza para cuero y pieles.",
-             "answer": "Pig (Skin)", "number": 49},
-            {"en": "This organ produces wool fibers that have commercial value.", 
-             "es": "Este órgano produce fibras de lana que tienen valor comercial.",
-             "answer": "Sheep (Skin/wool follicles)", "number": 50}
-        ];
-
-        // ========== VARIABLES GLOBALES ==========
-        let currentScreen = 'start';
-        let selectedQuestions = [];
-        let currentQuestionIndex = 0;
-        let userAnswers = {};
-        let score = 0;
-        let wrongQuestions = [];
-        let currentLanguage = 'en';
-        let studentData = { name: '', doc: '' };
-        let questionOptionsOrder = {};
-        let teacherCredentials = { 
-            username: localStorage.getItem('teacherUsername') || 'Coach', 
-            password: localStorage.getItem('teacherPassword') || '19082008' 
-        };
-
-        // ========== FUNCIONES DE NAVEGACIÓN ==========
-        function showScreen(screenName) {
-            document.querySelectorAll('.card').forEach(screen => {
-                screen.classList.add('hidden');
-            });
-            const targetScreen = document.getElementById(screenName);
-            if (targetScreen) {
-                targetScreen.classList.remove('hidden');
-                currentScreen = screenName;
-            }
+        // Mostrar mensaje
+        function showMessage(elementId, message, type = 'success') {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            setTimeout(() => element.innerHTML = '', 5000);
         }
 
-        function showStartScreen() { showScreen('start-screen'); }
-        function showTeacherLogin() { showScreen('teacher-login-screen'); }
-        function showTeacherMenu() { showScreen('teacher-menu-screen'); }
-        function showResultsScreen() { showScreen('results-screen'); }
-
-        // ========== FUNCIONES DEL QUIZ ==========
-        function startQuiz() {
-            const name = document.getElementById('name-input').value.trim();
-            const doc = document.getElementById('doc-input').value.trim();
-            
-            if (!name || !doc) {
-                showAlert('start-alert', 'Please enter your full name and student ID.', 'error');
-                return;
-            }
-            
-            studentData = { name, doc };
-            selectedQuestions = [...questions].sort(() => 0.5 - Math.random()).slice(0, 10);
-            currentQuestionIndex = 0;
-            userAnswers = {};
-            score = 0;
-            wrongQuestions = [];
-            currentLanguage = 'en';
-            questionOptionsOrder = {};
-            
-            showScreen('quiz-screen');
-            loadQuestion();
+        // Formatear fecha
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-ES');
         }
 
-        function loadQuestion() {
-            if (currentQuestionIndex >= selectedQuestions.length) {
-                finishQuiz();
-                return;
-            }
+        // Guardar resultado
+        document.getElementById('resultForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            const question = selectedQuestions[currentQuestionIndex];
-            const questionNum = currentQuestionIndex + 1;
-            
-            document.getElementById('question-number').textContent = `Question ${questionNum}/10`;
-            document.getElementById('progress-fill').style.width = `${(questionNum / 10) * 100}%`;
-            document.getElementById('question-text').textContent = 
-                currentLanguage === 'en' ? question.en : question.es;
-            document.getElementById('language-btn').textContent = 
-                currentLanguage === 'en' ? '🌐 Español' : '🌐 English';
-            
-            const optionsContainer = document.getElementById('options-container');
-            optionsContainer.innerHTML = '';
-            
-            let displayOptions = [];
-            
-            if (questionOptionsOrder[currentQuestionIndex]) {
-                displayOptions = questionOptionsOrder[currentQuestionIndex];
-            } else {
-                if (question.number >= 26) {
-                    const correctAnswer = question.answer;
-                    const allWrongOptions = [
-                        "Cow (Bovine stomach)", "Poultry (Gizzard)", "Pig (Small intestine)", 
-                        "Sheep (Skin)", "Goat (Abomasum in kids)", "Poultry (Kidney)",
-                        "Pig (Cecum)", "Goat (Eyes)", "Cow (Rumen)", "Poultry (Respiratory system)",
-                        "Sheep (Penis)", "Pig (Teeth)", "Cow (Ear gland system)", "Poultry (Ovary/Oviduct)",
-                        "Goat (Stomach)", "Sheep (Liver)", "Pig (Large intestine)", "Sheep (Mammary gland)",
-                        "Cow (Heart)", "Goat (Spleen)", "Poultry (Crop)", "Goat (Horn)", 
-                        "Cow (Salivary glands)", "Pig (Skin)", "Sheep (Skin/wool follicles)"
-                    ];
-                    const wrongOptions = allWrongOptions.filter(opt => opt !== correctAnswer);
-                    const selectedWrongOptions = wrongOptions.sort(() => 0.5 - Math.random()).slice(0, 4);
-                    displayOptions = [...selectedWrongOptions, correctAnswer].sort(() => 0.5 - Math.random());
-                } else {
-                    displayOptions = ["Cattle", "Poultry", "Pigs", "Sheep", "Goats"];
-                    if (!displayOptions.includes(question.answer)) {
-                        displayOptions[Math.floor(Math.random() * 5)] = question.answer;
-                    }
-                    displayOptions = displayOptions.sort(() => 0.5 - Math.random());
-                }
-                questionOptionsOrder[currentQuestionIndex] = displayOptions;
-            }
-            
-            displayOptions.forEach(option => {
-                const button = document.createElement('button');
-                button.className = 'option-btn';
-                button.textContent = option;
-                button.onclick = () => selectOption(option, button);
-                
-                if (userAnswers[currentQuestionIndex] === option) {
-                    button.classList.add('selected');
-                }
-                
-                optionsContainer.appendChild(button);
-            });
-            
-            document.getElementById('prev-btn').classList.toggle('hidden', currentQuestionIndex === 0);
-            document.getElementById('next-btn').classList.toggle('hidden', currentQuestionIndex === 9);
-            document.getElementById('finish-btn').classList.toggle('hidden', currentQuestionIndex !== 9);
-        }
-
-        function selectOption(option, button) {
-            document.querySelectorAll('.option-btn').forEach(btn => {
-                btn.classList.remove('selected');
-            });
-            button.classList.add('selected');
-            userAnswers[currentQuestionIndex] = option;
-        }
-
-        function toggleLanguage() {
-            currentLanguage = currentLanguage === 'en' ? 'es' : 'en';
-            loadQuestion();
-        }
-
-        function nextQuestion() {
-            if (currentQuestionIndex < selectedQuestions.length - 1) {
-                currentQuestionIndex++;
-                loadQuestion();
-            }
-        }
-
-        function prevQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                loadQuestion();
-            }
-        }
-
-        function finishQuiz() {
-            score = 0;
-            wrongQuestions = [];
-            
-            selectedQuestions.forEach((question, index) => {
-                if (userAnswers[index] === question.answer) {
-                    score += 2;
-                } else {
-                    wrongQuestions.push({
-                        number: question.number,
-                        question_en: question.en,
-                        question_es: question.es,
-                        user_answer: userAnswers[index] || 'No answer',
-                        correct_answer: question.answer
-                    });
-                }
-            });
-            
-            const percentage = (score / 20) * 100;
-            const roundedScore = Math.ceil(score);
-            
-            document.getElementById('final-score').textContent = `${score.toFixed(1)}/20 (${percentage.toFixed(1)}%)`;
-            document.getElementById('student-info').textContent = 
-                `Student: ${studentData.name} | ID: ${studentData.doc}`;
-            
-            let emoji, text, color;
-            if (percentage >= 90) {
-                emoji = '🎉'; text = 'Excellent!'; color = '#2ecc71';
-            } else if (percentage >= 70) {
-                emoji = '👍'; text = 'Good job!'; color = '#f39c12';
-            } else {
-                emoji = '📚'; text = 'Keep studying!'; color = '#e74c3c';
-            }
-            
-            document.getElementById('result-emoji').textContent = emoji;
-            document.getElementById('result-text').textContent = text;
-            document.getElementById('final-score').style.color = color;
-            
-            document.getElementById('wrong-answers-btn').classList.toggle('hidden', wrongQuestions.length === 0);
-            showScreen('results-screen');
-            
-            const resultData = {
-                name: studentData.name,
-                doc: studentData.doc,
-                score: score.toFixed(1),
-                percentage: percentage.toFixed(1),
-                roundedScore: roundedScore,
-                timestamp: new Date().toISOString(),
-                wrongAnswers: wrongQuestions.length
+            const formData = new FormData(this);
+            const data = {
+                name: formData.get('name'),
+                doc: formData.get('doc'),
+                score: parseFloat(formData.get('score')),
+                percentage: parseFloat(formData.get('percentage')),
+                roundedScore: parseInt(formData.get('roundedScore')),
+                wrongAnswers: parseInt(formData.get('wrongAnswers'))
             };
-            
-            showAlert('save-alert', 'Saving your results...', 'loading');
-            
-            // Intentar guardar en Google Sheets primero, luego fallback a localStorage
-            saveToGoogleSheets(resultData).then(saveResult => {
-                if (saveResult.success) {
-                    showAlert('save-alert', 'Results saved successfully in the cloud! ✅', 'success');
-                } else {
-                    // Fallback a localStorage
-                    saveToLocalStorage(resultData);
-                    showAlert('save-alert', 'Results saved locally (cloud error).', 'error');
-                }
-            });
-        }
 
-        function showWrongAnswers() {
-            const container = document.getElementById('wrong-answers-container');
-            container.innerHTML = '';
-            
-            if (wrongQuestions.length === 0) {
-                container.innerHTML = '<p>No wrong answers to review.</p>';
-            } else {
-                wrongQuestions.forEach((wq, index) => {
-                    const wrongAnswerDiv = document.createElement('div');
-                    wrongAnswerDiv.className = 'wrong-answer-item';
-                    wrongAnswerDiv.innerHTML = `
-                        <h4>Question ${wq.number}</h4>
-                        <p><strong>English:</strong> ${wq.question_en}</p>
-                        <p><strong>Español:</strong> ${wq.question_es}</p>
-                        <p style="color: #e74c3c;"><strong>Your answer:</strong> ${wq.user_answer}</p>
-                        <p style="color: #27ae60;"><strong>Correct answer:</strong> ${wq.correct_answer}</p>
-                    `;
-                    container.appendChild(wrongAnswerDiv);
-                });
-            }
-            
-            showScreen('wrong-answers-screen');
-        }
-
-      // ========== FUNCIONES DE GOOGLE SHEETS ==========
-async function saveToGoogleSheets(data) {
-    try {
-        const response = await fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                action: 'saveResult',
-                data: data
-            })
-        });
-        
-        const result = await response.json();
-        return result;
-    } catch (error) {
-        console.error('Error saving to Google Sheets:', error);
-        return { success: false, error: error.message };
-    }
-}
-
-async function getResultsFromGoogleSheets() {
-    try {
-        const response = await fetch(`${GOOGLE_SCRIPT_URL}?action=getResults&timestamp=${Date.now()}`);
-        const results = await response.json();
-        return results;
-    } catch (error) {
-        console.error('Error getting results from Google Sheets:', error);
-        return getResultsFromLocalStorage();
-    }
-}
-
-        async function deleteAllResultsFromGoogleSheets() {
             try {
-                if (GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
-                    deleteAllFromLocalStorage();
-                    return { success: true };
-                }
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'saveResult',
+                        data: data
+                    })
+                });
+
+                const result = await response.json();
                 
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                if (result.success) {
+                    showMessage('formMessage', '✅ Resultado guardado exitosamente', 'success');
+                    this.reset();
+                    loadResults();
+                } else {
+                    showMessage('formMessage', `❌ Error: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                showMessage('formMessage', `❌ Error de conexión: ${error.message}`, 'error');
+            }
+        });
+
+        // Cargar resultados
+        async function loadResults() {
+            const loadingElement = document.getElementById('loadingResults');
+            const tableElement = document.getElementById('resultsTable');
+            const tableBody = document.getElementById('resultsBody');
+            
+            loadingElement.style.display = 'block';
+            tableElement.style.display = 'none';
+
+            try {
+                const response = await fetch(`${SCRIPT_URL}?action=getResults`);
+                const results = await response.json();
+
+                if (results.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No hay resultados guardados</td></tr>';
+                } else {
+                    tableBody.innerHTML = results.map(result => `
+                        <tr>
+                            <td>${result.name}</td>
+                            <td>${result.doc}</td>
+                            <td><strong>${result.score}</strong></td>
+                            <td>${result.percentage}%</td>
+                            <td>${formatDate(result.timestamp)}</td>
+                        </tr>
+                    `).join('');
+                }
+
+                loadingElement.style.display = 'none';
+                tableElement.style.display = 'table';
+                showMessage('resultsMessage', `✅ ${results.length} resultados cargados`, 'success');
+
+            } catch (error) {
+                loadingElement.style.display = 'none';
+                showMessage('resultsMessage', `❌ Error al cargar resultados: ${error.message}`, 'error');
+            }
+        }
+
+        // Eliminar todos los resultados
+        async function deleteAllResults() {
+            if (!confirm('¿Estás seguro de que deseas eliminar TODOS los resultados? Esta acción no se puede deshacer.')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -871,206 +313,22 @@ async function getResultsFromGoogleSheets() {
                         action: 'deleteAllResults'
                     })
                 });
-                
+
                 const result = await response.json();
-                return result;
-            } catch (error) {
-                console.error('Error deleting from Google Sheets:', error);
-                return { success: false, error: error.message };
-            }
-        }
-
-        // ========== FUNCIONES LOCALSTORAGE (FALLBACK) ==========
-        function saveToLocalStorage(data) {
-            const results = JSON.parse(localStorage.getItem('quizResults') || '[]');
-            results.push(data);
-            localStorage.setItem('quizResults', JSON.stringify(results));
-        }
-
-        function getResultsFromLocalStorage() {
-            return JSON.parse(localStorage.getItem('quizResults') || '[]');
-        }
-
-        function deleteAllFromLocalStorage() {
-            localStorage.removeItem('quizResults');
-        }
-
-        // ========== FUNCIONES DE PROFESOR ==========
-        async function verifyLogin() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const loginBtn = document.getElementById('login-btn');
-            
-            loginBtn.innerHTML = '<div class="loading"></div> Checking...';
-            loginBtn.disabled = true;
-            
-            if (username === teacherCredentials.username && password === teacherCredentials.password) {
-                showAlert('login-alert', 'Login successful!', 'success');
-                setTimeout(() => showTeacherMenu(), 1000);
-            } else {
-                showAlert('login-alert', 'Invalid credentials. Please try again.', 'error');
-                document.getElementById('username').value = '';
-                document.getElementById('password').value = '';
-                document.getElementById('username').focus();
-            }
-            
-            loginBtn.innerHTML = 'Login';
-            loginBtn.disabled = false;
-        }
-
-        function changeUsername() {
-            const newUsername = prompt('Enter new username:', teacherCredentials.username);
-            if (newUsername && newUsername.trim()) {
-                teacherCredentials.username = newUsername.trim();
-                localStorage.setItem('teacherUsername', teacherCredentials.username);
-                showAlert('teacher-alert', 'Username updated successfully!', 'success');
-            }
-        }
-
-        function changePassword() {
-            const newPassword = prompt('Enter new password:');
-            if (newPassword && newPassword.trim()) {
-                teacherCredentials.password = newPassword.trim();
-                localStorage.setItem('teacherPassword', teacherCredentials.password);
-                showAlert('teacher-alert', 'Password updated successfully!', 'success');
-            }
-        }
-
-        async function deleteDatabase() {
-            if (confirm('Are you sure you want to delete ALL student results?\nThis action cannot be undone.')) {
-                showAlert('teacher-alert', 'Deleting all results...', 'loading');
                 
-                const deleteResult = await deleteAllResultsFromGoogleSheets();
-                
-                if (deleteResult.success) {
-                    showAlert('teacher-alert', 'All results deleted successfully!', 'success');
+                if (result.success) {
+                    showMessage('resultsMessage', '✅ Todos los resultados han sido eliminados', 'success');
+                    loadResults();
                 } else {
-                    showAlert('teacher-alert', 'Error deleting results. Try again.', 'error');
+                    showMessage('resultsMessage', `❌ Error: ${result.error}`, 'error');
                 }
+            } catch (error) {
+                showMessage('resultsMessage', `❌ Error de conexión: ${error.message}`, 'error');
             }
         }
 
-        async function viewRanking() {
-            showAlert('ranking-alert', 'Loading results...', 'loading');
-            
-            const results = await getResultsFromGoogleSheets();
-            const container = document.getElementById('ranking-table-container');
-            
-            if (results.length === 0) {
-                container.innerHTML = '<p>No results found.</p>';
-                showAlert('ranking-alert', 'No results available.', 'error');
-            } else {
-                let html = `
-                    <table class="ranking-table">
-                        <tr>
-                            <th>Pos</th>
-                            <th>Name</th>
-                            <th>ID</th>
-                            <th>Score</th>
-                            <th>Percentage</th>
-                            <th>Rounded</th>
-                            <th>Wrong Answers</th>
-                            <th>Date</th>
-                        </tr>
-                `;
-                
-                results.sort((a, b) => b.percentage - a.percentage);
-                
-                results.forEach((result, index) => {
-                    let rowClass = '';
-                    if (index === 0) rowClass = 'gold';
-                    else if (index === 1) rowClass = 'silver';
-                    else if (index === 2) rowClass = 'bronze';
-                    
-                    const date = new Date(result.timestamp).toLocaleDateString();
-                    
-                    html += `
-                        <tr class="${rowClass}">
-                            <td>${index + 1}</td>
-                            <td>${result.name}</td>
-                            <td>${result.doc}</td>
-                            <td>${result.score}</td>
-                            <td>${result.percentage}%</td>
-                            <td><strong>${result.roundedScore}</strong></td>
-                            <td>${result.wrongAnswers || 'N/A'}</td>
-                            <td>${date}</td>
-                        </tr>
-                    `;
-                });
-                
-                html += '</table>';
-                container.innerHTML = html;
-                showAlert('ranking-alert', `Loaded ${results.length} results`, 'success');
-            }
-            
-            showScreen('ranking-screen');
-        }
-
-        // ========== FUNCIONES UTILITARIAS ==========
-        function showAlert(containerId, message, type) {
-            const container = document.getElementById(containerId);
-            const alertClass = type === 'success' ? 'alert-success' : 
-                              type === 'error' ? 'alert-error' : '';
-            
-            if (type === 'loading') {
-                container.innerHTML = `<div class="alert">${message} <div class="loading" style="display: inline-block; margin-left: 10px;"></div></div>`;
-            } else {
-                container.innerHTML = `<div class="alert ${alertClass}">${message}</div>`;
-            }
-            
-            if (type !== 'loading') {
-                setTimeout(() => {
-                    container.innerHTML = '';
-                }, 5000);
-            }
-        }
-
-        function exportToCSV() {
-            const results = getResultsFromLocalStorage();
-            if (results.length === 0) {
-                alert('No results to export.');
-                return;
-            }
-            
-            let csvContent = "Name,ID,Score,Percentage,Rounded Score,Wrong Answers,Date\n";
-            results.forEach(result => {
-                const date = new Date(result.timestamp).toLocaleDateString();
-                csvContent += `"${result.name}","${result.doc}",${result.score},${result.percentage},${result.roundedScore},${result.wrongAnswers || 'N/A'},${date}\n`;
-            });
-            
-            const blob = new Blob([csvContent], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'VetQuiz_Results.csv';
-            a.click();
-            window.URL.revokeObjectURL(url);
-            
-            showAlert('ranking-alert', 'CSV file downloaded successfully!', 'success');
-        }
-
-        // ========== INICIALIZACIÓN ==========
-        function initializeApp() {
-            showStartScreen();
-            
-            document.getElementById('name-input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') startQuiz();
-            });
-
-            document.getElementById('doc-input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') startQuiz();
-            });
-
-            document.getElementById('username').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') document.getElementById('password').focus();
-            });
-
-            document.getElementById('password').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') verifyLogin();
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', initializeApp);
+        // Cargar resultados al iniciar
+        document.addEventListener('DOMContentLoaded', loadResults);
     </script>
 </body>
 </html>
