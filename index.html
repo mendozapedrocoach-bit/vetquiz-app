@@ -302,7 +302,7 @@
             results: []
         };
 
-        // Preguntas del quiz
+        // Preguntas del quiz - TODAS LAS 50 PREGUNTAS INTEGRADAS
         const questions = [
             // Preguntas 1-25 (simples)
             {"en": "Produce hides widely used in the leather industry.", 
@@ -311,8 +311,152 @@
             {"en": "Have no teeth; they grind food in the gizzard.", 
              "es": "No tienen dientes; trituran la comida en la molleja.",
              "answer": "Poultry", "number": 2},
-            // ... (aquí irían todas las 50 preguntas, pero por brevedad solo incluyo 2 ejemplos)
-            // En la implementación real, incluirías todas las 50 preguntas
+            {"en": "Gestation period famously called '3 months, 3 weeks, 3 days.'", 
+             "es": "Periodo de gestación famosamente llamado '3 meses, 3 semanas, 3 días.'",
+             "answer": "Pigs", "number": 3},
+            {"en": "Often raised in flocks for grazing in open pastures.", 
+             "es": "Suelen criarse en rebaños para pastar en pastizales abiertos.",
+             "answer": "Sheep", "number": 4},
+            {"en": "Iconic breeds include Angus, Holstein, and Hereford.", 
+             "es": "Las razas icónicas incluyen Angus, Holstein y Hereford.",
+             "answer": "Cattle", "number": 5},
+            {"en": "Laying hens produce around 250–300 eggs per year.", 
+             "es": "Las gallinas ponedoras producen alrededor de 250-300 huevos por año.",
+             "answer": "Poultry", "number": 6},
+            {"en": "Provide pork cuts such as ham, bacon, and ribs.", 
+             "es": "Proporcionan cortes de cerdo como jamón, tocino y costillas.",
+             "answer": "Pigs", "number": 7},
+            {"en": "Milk is mainly used for cheese like Roquefort or Manchego.", 
+             "es": "La leche se utiliza principalmente para quesos como Roquefort o Manchego.",
+             "answer": "Sheep", "number": 8},
+            {"en": "Excellent climbers, able to move on rocky and steep terrain.", 
+             "es": "Excelentes trepadores, capaces de moverse en terrenos rocosos y empinados.",
+             "answer": "Goats", "number": 9},
+            {"en": "Produce wool that must be sheared at least once a year.", 
+             "es": "Producen lana que debe esquilarse al menos una vez al año.",
+             "answer": "Sheep", "number": 10},
+            {"en": "Provide both eggs and white meat as main products.", 
+             "es": "Proporcionan tanto huevos como carne blanca como productos principales.",
+             "answer": "Poultry", "number": 11},
+            {"en": "Main source of beef and dairy products.", 
+             "es": "Fuente principal de carne de res y productos lácteos.",
+             "answer": "Cattle", "number": 12},
+            {"en": "Have a sensitive snout used for rooting in soil.", 
+             "es": "Tienen un hocico sensible utilizado para hozar en el suelo.",
+             "answer": "Pigs", "number": 13},
+            {"en": "Produce highly nutritious milk, often used for specialty cheeses.", 
+             "es": "Producen leche altamente nutritiva, a menudo utilizada para quesos especiales.",
+             "answer": "Goats", "number": 14},
+            {"en": "Broiler breeds like Cornish Cross grow to market weight in 6–8 weeks.", 
+             "es": "Las razas de pollos de engorde como Cornish Cross alcanzan el peso de mercado en 6-8 semanas.",
+             "answer": "Poultry", "number": 15},
+            {"en": "Can weigh over 1,200 kg in some breeds.", 
+             "es": "Pueden pesar más de 1,200 kg en algunas razas.",
+             "answer": "Cattle", "number": 16},
+            {"en": "Breeds include Merino and Suffolk, known for fine wool.", 
+             "es": "Las razas incluyen Merino y Suffolk, conocidas por su lana fina.",
+             "answer": "Sheep", "number": 17},
+            {"en": "Beards and horns are common in both males and females.", 
+             "es": "Las barbas y los cuernos son comunes tanto en machos como en hembras.",
+             "answer": "Goats", "number": 18},
+            {"en": "Extremely intelligent, capable of learning tricks and solving problems.", 
+             "es": "Extremadamente inteligentes, capaces de aprender trucos y resolver problemas.",
+             "answer": "Pigs", "number": 19},
+            {"en": "Breeds like Boer (meat) and Saanen (milk) are widely recognized.", 
+             "es": "Razas como Boer (carne) y Saanen (leche) son ampliamente reconocidas.",
+             "answer": "Goats", "number": 20},
+            {"en": "Tail docking is a common management practice.", 
+             "es": "El corte de cola es una práctica de manejo común.",
+             "answer": "Sheep", "number": 21},
+            {"en": "Have four stomach compartments for digesting grass.", 
+             "es": "Tienen cuatro compartimentos estomacales para digerir hierba.",
+             "answer": "Cattle", "number": 22},
+            {"en": "Very curious and mischievous behavior.", 
+             "es": "Comportamiento muy curioso y travieso.",
+             "answer": "Goats", "number": 23},
+            {"en": "Breeds include Yorkshire and Duroc, common in commercial farming.", 
+             "es": "Las razas incluyen Yorkshire y Duroc, comunes en la ganadería comercial.",
+             "answer": "Pigs", "number": 24},
+            {"en": "Chickens have a comb and wattles as distinctive features.", 
+             "es": "Los pollos tienen cresta y barbillas como características distintivas.",
+             "answer": "Poultry", "number": 25},
+            
+            // Preguntas 26-50 (con órganos)
+            {"en": "This organ has four compartments: rumen, reticulum, omasum, and abomasum. It allows the animal to digest fiber efficiently.", 
+             "es": "Este órgano tiene cuatro compartimentos: rumen, retículo, omaso y abomaso. Permite al animal digerir fibra eficientemente.",
+             "answer": "Cow (Bovine stomach)", "number": 26},
+            {"en": "This organ is long and spiral-shaped, specialized for absorbing nutrients in monogastric animals.", 
+             "es": "Este órgano es largo y en forma de espiral, especializado para absorber nutrientes en animales monogástricos.",
+             "answer": "Pig (Small intestine)", "number": 27},
+            {"en": "This organ is small and bean-shaped, filtering nitrogen waste in uric acid instead of urea.", 
+             "es": "Este órgano es pequeño y con forma de frijol, filtra desechos nitrogenados en ácido úrico en lugar de urea.",
+             "answer": "Poultry (Kidney)", "number": 28},
+            {"en": "This organ produces lanolin and helps regulate body temperature through wool follicles.", 
+             "es": "Este órgano produce lanolina y ayuda a regular la temperatura corporal a través de los folículos de lana.",
+             "answer": "Sheep (Skin)", "number": 29},
+            {"en": "This organ is bilobed and produces enzymes for milk digestion in young ruminants.", 
+             "es": "Este órgano es bilobulado y produce enzimas para la digestión de la leche en rumiantes jóvenes.",
+             "answer": "Goat (Abomasum in kids)", "number": 30},
+            {"en": "This muscular organ grinds food with the help of grit and stones swallowed by the animal.", 
+             "es": "Este órgano muscular tritura la comida con la ayuda de arenilla y piedras tragadas por el animal.",
+             "answer": "Poultry (Gizzard)", "number": 31},
+            {"en": "This organ has a large cecum that ferments fibrous plant material, though not as big as in horses.", 
+             "es": "Este órgano tiene un ciego grande que fermenta material vegetal fibroso, aunque no tan grande como en los caballos.",
+             "answer": "Pig (Cecum)", "number": 32},
+            {"en": "This organ has horizontal pupils, giving a wide field of vision to detect predators.", 
+             "es": "Este órgano tiene pupilas horizontales, dando un amplio campo de visión para detectar depredadores.",
+             "answer": "Goat (Eyes)", "number": 33},
+            {"en": "This organ is massive in size, taking up much of the abdominal cavity and responsible for rumination.", 
+             "es": "Este órgano es masivo en tamaño, ocupa gran parte de la cavidad abdominal y es responsable de la rumia.",
+             "answer": "Cow (Rumen)", "number": 34},
+            {"en": "This organ has air sacs that extend into bones, making respiration highly efficient.", 
+             "es": "Este órgano tiene sacos aéreos que se extienden hasta los huesos, haciendo la respiración altamente eficiente.",
+             "answer": "Poultry (Respiratory system)", "number": 35},
+            {"en": "This organ in males is spiral-shaped and adapted for quick copulation.", 
+             "es": "Este órgano en los machos tiene forma espiral y está adaptado para una cópula rápida.",
+             "answer": "Sheep (Penis)", "number": 36},
+            {"en": "This organ has strong canines and molars adapted for crushing hard grains and mastication.", 
+             "es": "Este órgano tiene caninos y molares fuertes adaptados para triturar granos duros y masticar.",
+             "answer": "Pig (Teeth)", "number": 37},
+            {"en": "This organ secretes wax that protects the ear canal and is particularly large in dairy animals.", 
+             "es": "Este órgano secreta cera que protege el canal auditivo y es particularmente grande en animales lecheros.",
+             "answer": "Cow (Ear gland system)", "number": 38},
+            {"en": "This organ produces eggs covered with a calcium shell, unique among domestic animals.", 
+             "es": "Este órgano produce huevos cubiertos con una cáscara de calcio, único entre los animales domésticos.",
+             "answer": "Poultry (Ovary/Oviduct)", "number": 39},
+            {"en": "This organ has a large rumen but is relatively smaller compared to cattle, making them more selective feeders.", 
+             "es": "Este órgano tiene un rumen grande pero relativamente más pequeño en comparación con el ganado, lo que los hace alimentadores más selectivos.",
+             "answer": "Goat (Stomach)", "number": 40},
+            {"en": "This organ is double-lobed, producing bile but lacking a gall bladder in some species.", 
+             "es": "Este órgano es bilobulado, produce bilis pero carece de vesícula biliar en algunas especies.",
+             "answer": "Sheep (Liver)", "number": 41},
+            {"en": "This organ has a spiral colon that improves absorption in omnivores.", 
+             "es": "Este órgano tiene un colon espiral que mejora la absorción en omnívoros.",
+             "answer": "Pig (Large intestine)", "number": 42},
+            {"en": "This organ is responsible for producing milk with high butterfat content compared to other ruminants.", 
+             "es": "Este órgano es responsable de producir leche con alto contenido de grasa butírica en comparación con otros rumiantes.",
+             "answer": "Sheep (Mammary gland)", "number": 43},
+            {"en": "This organ is strong and muscular, pumping blood through a four-chambered structure in all livestock species.", 
+             "es": "Este órgano es fuerte y muscular, bombea sangre a través de una estructura de cuatro cámaras en todas las especies de ganado.",
+             "answer": "Cow (Heart)", "number": 44},
+            {"en": "This organ filters blood but has a long, slender shape in ruminants.", 
+             "es": "Este órgano filtra la sangre pero tiene una forma larga y delgada en rumiantes.",
+             "answer": "Goat (Spleen)", "number": 45},
+            {"en": "This organ has a crop where food is temporarily stored before digestion.", 
+             "es": "Este órgano tiene un buche donde la comida se almacena temporalmente antes de la digestión.",
+             "answer": "Poultry (Crop)", "number": 46},
+            {"en": "This organ has horns that curve outward in males, used for defense and dominance.", 
+             "es": "Este órgano tiene cuernos que se curvan hacia afuera en los machos, utilizados para defensa y dominancia.",
+             "answer": "Goat (Horn)", "number": 47},
+            {"en": "This organ can produce large amounts of saliva—up to 150 liters a day for digestion.", 
+             "es": "Este órgano puede producir grandes cantidades de saliva—hasta 150 litros al día para la digestión.",
+             "answer": "Cow (Salivary glands)", "number": 48},
+            {"en": "This organ produces thick skin that is often used for leather and hides.", 
+             "es": "Este órgano produce piel gruesa que a menudo se utiliza para cuero y pieles.",
+             "answer": "Pig (Skin)", "number": 49},
+            {"en": "This organ produces wool fibers that have commercial value.", 
+             "es": "Este órgano produce fibras de lana que tienen valor comercial.",
+             "answer": "Sheep (Skin/wool follicles)", "number": 50}
         ];
 
         // Inicializar Pyodide
@@ -540,7 +684,7 @@
             quizData.selectedQuestions.forEach((q, index) => {
                 const questionNum = index + 1;
                 const userAnswer = quizData.answers[index] || "";
-                const usedSpanish = quizData.currentLanguage === "es";
+                const usedSpanish = quizData.questionPoints[questionNum]?.usedSpanish || false;
                 
                 if (userAnswer === q.answer) {
                     const points = usedSpanish ? 1.5 : 2.0;
@@ -570,7 +714,7 @@
 
         function saveResult() {
             const percent = (quizData.score / 20) * 100;
-            const roundedScore = Math.ceil(quizData.score) % 1 >= 0.5 ? 
+            const roundedScore = quizData.score % 1 >= 0.5 ? 
                 Math.ceil(quizData.score) : Math.round(quizData.score);
             
             const wrongQuestionsStr = quizData.wrongQuestions
@@ -591,7 +735,7 @@
 
         function showResults() {
             const percent = (quizData.score / 20) * 100;
-            const roundedScore = Math.ceil(quizData.score) % 1 >= 0.5 ? 
+            const roundedScore = quizData.score % 1 >= 0.5 ? 
                 Math.ceil(quizData.score) : Math.round(quizData.score);
             
             let emoji, color;
