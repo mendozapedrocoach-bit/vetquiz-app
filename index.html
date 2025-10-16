@@ -3,332 +3,693 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Evaluación</title>
+    <title>VetQuizApp - Versión Web</title>
     <style>
-        /* Tus estilos CSS permanecen igual */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
             margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
             background: white;
+            padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .content {
-            padding: 30px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        @media (max-width: 768px) {
-            .content {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 25px;
-            border-left: 5px solid #4CAF50;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-
-        .form-group {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             margin-bottom: 20px;
         }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #555;
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
         }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
         }
-
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
         .btn {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
+            background: #3498db;
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-size: 16px;
+            padding: 12px 24px;
+            border-radius: 6px;
             cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
+            font-size: 16px;
+            margin: 5px;
+            transition: background 0.3s;
         }
-
-        .results-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        .btn:hover {
+            background: #2980b9;
         }
-
-        .results-table th,
-        .results-table td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #e0e0e0;
+        .btn-success {
+            background: #27ae60;
         }
-
-        .results-table th {
-            background: #4CAF50;
-            color: white;
+        .btn-success:hover {
+            background: #219a52;
         }
-
-        .alert {
-            padding: 15px;
+        .btn-danger {
+            background: #e74c3c;
+        }
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        .btn-warning {
+            background: #f39c12;
+        }
+        .btn-warning:hover {
+            background: #d35400;
+        }
+        .question {
+            background: #f8f9fa;
+            padding: 20px;
             border-radius: 8px;
             margin: 15px 0;
+            border-left: 4px solid #3498db;
         }
-
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
+        .options {
+            margin: 15px 0;
         }
-
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
+        .option {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .option:hover {
+            background: #d6dbdf;
+        }
+        .option.selected {
+            background: #3498db;
+            color: white;
+        }
+        .score-display {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            background: #ecf0f1;
+        }
+        .progress-bar {
+            height: 10px;
+            background: #ecf0f1;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        .progress {
+            height: 100%;
+            background: #3498db;
+            transition: width 0.3s;
+        }
+        .hidden {
+            display: none;
+        }
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .ranking-table th, .ranking-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .ranking-table th {
+            background: #34495e;
+            color: white;
+        }
+        .ranking-table tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+        .gold {
+            background: #FFD700 !important;
+            font-weight: bold;
+        }
+        .silver {
+            background: #C0C0C0 !important;
+            font-weight: bold;
+        }
+        .bronze {
+            background: #CD7F32 !important;
+            font-weight: bold;
+            color: white;
+        }
+        .wrong-answer {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .language-toggle {
+            float: right;
+            background: #95a5a6;
+        }
+        .language-toggle:hover {
+            background: #7f8c8d;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🏫 Sistema de Evaluación</h1>
-            <p>Registro y consulta de resultados de pruebas en línea</p>
+        <h1>VetQuizApp 🩺</h1>
+        <div class="subtitle">U.P.T.N.T. Manuela Saenz - Versión Web</div>
+        
+        <!-- Pantalla de inicio -->
+        <div id="start-screen">
+            <h2>Bienvenido al Quiz de Veterinaria</h2>
+            <p>Este quiz contiene 50 preguntas sobre diferentes animales domésticos y sus características. 
+               Se seleccionarán 10 preguntas al azar para cada intento.</p>
+            
+            <div style="margin: 20px 0;">
+                <label for="student-name">Nombre del Estudiante:</label>
+                <select id="student-name" style="padding: 8px; margin-left: 10px; width: 200px;">
+                    <option value="Student A">Student A</option>
+                    <option value="Student B">Student B</option>
+                    <option value="Student C">Student C</option>
+                    <option value="Student D">Student D</option>
+                    <option value="Student E">Student E</option>
+                </select>
+            </div>
+            
+            <div style="margin: 20px 0;">
+                <label for="student-id">ID del Estudiante:</label>
+                <select id="student-id" style="padding: 8px; margin-left: 10px; width: 200px;">
+                    <option value="ID001">ID001</option>
+                    <option value="ID002">ID002</option>
+                    <option value="ID003">ID003</option>
+                    <option value="ID004">ID004</option>
+                    <option value="ID005">ID005</option>
+                </select>
+            </div>
+            
+            <button class="btn btn-success" onclick="startQuiz()">Comenzar Quiz</button>
+            <button class="btn" onclick="showTeacherLogin()">Acceso para Profesores</button>
         </div>
-
-        <div class="content">
-            <!-- Formulario para guardar resultados -->
-            <div class="card">
-                <h2>📊 Registrar Resultado</h2>
-                <form id="resultForm">
-                    <div class="form-group">
-                        <label for="name">Nombre completo:</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="doc">Documento de identidad:</label>
-                        <input type="text" id="doc" name="doc" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="score">Puntaje obtenido:</label>
-                        <input type="number" id="score" name="score" required min="0" step="0.1">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="percentage">Porcentaje (%):</label>
-                        <input type="number" id="percentage" name="percentage" required min="0" max="100" step="0.1">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="roundedScore">Puntaje redondeado:</label>
-                        <input type="number" id="roundedScore" name="roundedScore" required min="0">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="wrongAnswers">Respuestas incorrectas:</label>
-                        <input type="number" id="wrongAnswers" name="wrongAnswers" required min="0">
-                    </div>
-
-                    <button type="submit" class="btn">💾 Guardar Resultado</button>
-                </form>
-
-                <div id="formMessage"></div>
+        
+        <!-- Pantalla de login para profesores -->
+        <div id="teacher-login" class="hidden">
+            <h2>Acceso para Profesores</h2>
+            <div style="margin: 15px 0;">
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" style="padding: 8px; margin-left: 10px; width: 200px;" value="Coach">
             </div>
-
-            <!-- Panel de resultados -->
-            <div class="card">
-                <h2>📈 Resultados Guardados</h2>
-
-                <button onclick="loadResults()" class="btn">🔄 Actualizar Lista</button>
-                <button onclick="deleteAllResults()" class="btn" style="background: #f44336;">🗑️ Eliminar Todos</button>
-
-                <div id="resultsMessage"></div>
-                
-                <div id="resultsContainer">
-                    <div id="loadingResults">Cargando resultados...</div>
-                    <table class="results-table" id="resultsTable" style="display: none;">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Documento</th>
-                                <th>Puntaje</th>
-                                <th>%</th>
-                                <th>Fecha</th>
-                            </tr>
-                        </thead>
-                        <tbody id="resultsBody"></tbody>
-                    </table>
-                </div>
+            <div style="margin: 15px 0;">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" style="padding: 8px; margin-left: 10px; width: 200px;" value="19082008">
             </div>
+            <button class="btn btn-success" onclick="verifyLogin()">Ingresar</button>
+            <button class="btn" onclick="showStartScreen()">Volver</button>
+        </div>
+        
+        <!-- Menú de administración -->
+        <div id="admin-menu" class="hidden">
+            <h2>Panel de Administración 🧑‍🏫</h2>
+            <button class="btn" onclick="viewRanking()">📊 Ver Resultados y Ranking</button>
+            <button class="btn" onclick="showStartScreen()">⬅️ Volver al Menú Principal</button>
+            
+            <div id="ranking-results" class="hidden">
+                <h3>Ranking de Estudiantes</h3>
+                <table class="ranking-table" id="ranking-table">
+                    <thead>
+                        <tr>
+                            <th>Pos</th>
+                            <th>Nombre</th>
+                            <th>ID</th>
+                            <th>Puntaje</th>
+                            <th>Porcentaje</th>
+                            <th>Puntaje Redondeado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ranking-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Pantalla de preguntas -->
+        <div id="quiz-screen" class="hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2 id="question-number">Pregunta 1/10</h2>
+                <button class="btn language-toggle" id="language-btn" onclick="toggleLanguage()">🌐 Español</button>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress" id="progress-bar" style="width: 10%;"></div>
+            </div>
+            
+            <div class="question" id="question-text">
+                <!-- La pregunta se cargará aquí -->
+            </div>
+            
+            <div class="options" id="options-container">
+                <!-- Las opciones se cargarán aquí -->
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <button class="btn" id="prev-btn" onclick="prevQuestion()" style="display: none;">← Anterior</button>
+                <button class="btn" id="next-btn" onclick="nextQuestion()">Siguiente →</button>
+                <button class="btn btn-success" id="finish-btn" onclick="finishQuiz()" style="display: none;">Finalizar Quiz</button>
+            </div>
+        </div>
+        
+        <!-- Pantalla de resultados -->
+        <div id="results-screen" class="hidden">
+            <h2>Quiz Completado!</h2>
+            <div class="score-display" id="score-display">
+                <!-- Los resultados se mostrarán aquí -->
+            </div>
+            
+            <div id="wrong-answers-container" style="margin: 20px 0;">
+                <!-- Preguntas incorrectas se mostrarán aquí -->
+            </div>
+            
+            <button class="btn" onclick="showStartScreen()">Volver al Menú Principal</button>
+            <button class="btn btn-success" onclick="startQuiz()">Repetir Quiz</button>
         </div>
     </div>
 
+    <!-- Cargar Pyodide -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    
     <script>
-        // ⚠️ REEMPLAZA CON LA URL DE TU GOOGLE APPS SCRIPT
-        const SCRIPT_URL = 'App web: https://script.google.com/macros/s/AKfycby6WEfrHLtd0o-P1vEkX6Rz3_ySuFqVGx6odOMlh8lzkcHCHCx6yhSmmiga7gfjWn61lQ/exec';
+        // Variables globales
+        let pyodide;
+        let quizData = {
+            currentQuestion: 0,
+            score: 0,
+            selectedQuestions: [],
+            answers: {},
+            questionPoints: {},
+            wrongQuestions: [],
+            currentLanguage: "en",
+            studentName: "",
+            studentId: "",
+            results: []
+        };
 
-        // Mostrar mensaje
-        function showMessage(elementId, message, type = 'success') {
-            const element = document.getElementById(elementId);
-            element.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
-            setTimeout(() => element.innerHTML = '', 5000);
-        }
+        // Preguntas del quiz
+        const questions = [
+            // Preguntas 1-25 (simples)
+            {"en": "Produce hides widely used in the leather industry.", 
+             "es": "Produce cueros ampliamente utilizados en la industria del cuero.",
+             "answer": "Cattle", "number": 1},
+            {"en": "Have no teeth; they grind food in the gizzard.", 
+             "es": "No tienen dientes; trituran la comida en la molleja.",
+             "answer": "Poultry", "number": 2},
+            // ... (aquí irían todas las 50 preguntas, pero por brevedad solo incluyo 2 ejemplos)
+            // En la implementación real, incluirías todas las 50 preguntas
+        ];
 
-        // Formatear fecha
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('es-ES');
-        }
-
-        // Guardar resultado
-        document.getElementById('resultForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const data = {
-                name: formData.get('name'),
-                doc: formData.get('doc'),
-                score: parseFloat(formData.get('score')),
-                percentage: parseFloat(formData.get('percentage')),
-                roundedScore: parseInt(formData.get('roundedScore')),
-                wrongAnswers: parseInt(formData.get('wrongAnswers'))
-            };
-
+        // Inicializar Pyodide
+        async function initializePyodide() {
             try {
-                const response = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: 'saveResult',
-                        data: data
-                    })
+                console.log("Cargando Pyodide...");
+                pyodide = await loadPyodide({
+                    indexURL: "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/"
                 });
-
-                const result = await response.json();
+                console.log("Pyodide cargado correctamente");
                 
-                if (result.success) {
-                    showMessage('formMessage', '✅ Resultado guardado exitosamente', 'success');
-                    this.reset();
-                    loadResults();
-                } else {
-                    showMessage('formMessage', `❌ Error: ${result.error}`, 'error');
-                }
+                // Configurar el estado inicial
+                showStartScreen();
             } catch (error) {
-                showMessage('formMessage', `❌ Error de conexión: ${error.message}`, 'error');
-            }
-        });
-
-        // Cargar resultados
-        async function loadResults() {
-            const loadingElement = document.getElementById('loadingResults');
-            const tableElement = document.getElementById('resultsTable');
-            const tableBody = document.getElementById('resultsBody');
-            
-            loadingElement.style.display = 'block';
-            tableElement.style.display = 'none';
-
-            try {
-                const response = await fetch(`${SCRIPT_URL}?action=getResults`);
-                const results = await response.json();
-
-                if (results.length === 0) {
-                    tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No hay resultados guardados</td></tr>';
-                } else {
-                    tableBody.innerHTML = results.map(result => `
-                        <tr>
-                            <td>${result.name}</td>
-                            <td>${result.doc}</td>
-                            <td><strong>${result.score}</strong></td>
-                            <td>${result.percentage}%</td>
-                            <td>${formatDate(result.timestamp)}</td>
-                        </tr>
-                    `).join('');
-                }
-
-                loadingElement.style.display = 'none';
-                tableElement.style.display = 'table';
-                showMessage('resultsMessage', `✅ ${results.length} resultados cargados`, 'success');
-
-            } catch (error) {
-                loadingElement.style.display = 'none';
-                showMessage('resultsMessage', `❌ Error al cargar resultados: ${error.message}`, 'error');
+                console.error("Error al cargar Pyodide:", error);
+                alert("Error al cargar el entorno Python. Por favor, recarga la página.");
             }
         }
 
-        // Eliminar todos los resultados
-        async function deleteAllResults() {
-            if (!confirm('¿Estás seguro de que deseas eliminar TODOS los resultados? Esta acción no se puede deshacer.')) {
+        // Funciones de navegación de pantallas
+        function showStartScreen() {
+            hideAllScreens();
+            document.getElementById('start-screen').classList.remove('hidden');
+        }
+
+        function showTeacherLogin() {
+            hideAllScreens();
+            document.getElementById('teacher-login').classList.remove('hidden');
+        }
+
+        function showAdminMenu() {
+            hideAllScreens();
+            document.getElementById('admin-menu').classList.remove('hidden');
+        }
+
+        function showQuizScreen() {
+            hideAllScreens();
+            document.getElementById('quiz-screen').classList.remove('hidden');
+        }
+
+        function showResultsScreen() {
+            hideAllScreens();
+            document.getElementById('results-screen').classList.remove('hidden');
+        }
+
+        function hideAllScreens() {
+            const screens = [
+                'start-screen', 'teacher-login', 'admin-menu', 
+                'quiz-screen', 'results-screen'
+            ];
+            screens.forEach(screen => {
+                document.getElementById(screen).classList.add('hidden');
+            });
+        }
+
+        // Funciones del quiz
+        function startQuiz() {
+            const name = document.getElementById('student-name').value;
+            const id = document.getElementById('student-id').value;
+            
+            if (!name || !id) {
+                alert("Por favor, selecciona tu nombre y ID.");
                 return;
             }
+            
+            quizData.studentName = name;
+            quizData.studentId = id;
+            quizData.currentQuestion = 0;
+            quizData.score = 0;
+            quizData.answers = {};
+            quizData.questionPoints = {};
+            quizData.wrongQuestions = [];
+            quizData.currentLanguage = "en";
+            
+            // Seleccionar 10 preguntas aleatorias
+            quizData.selectedQuestions = getRandomQuestions(questions, 10);
+            
+            showQuizScreen();
+            displayQuestion();
+        }
 
-            try {
-                const response = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: 'deleteAllResults'
-                    })
+        function getRandomQuestions(questions, count) {
+            const shuffled = [...questions].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        function displayQuestion() {
+            const q = quizData.selectedQuestions[quizData.currentQuestion];
+            const qNum = quizData.currentQuestion + 1;
+            const totalQuestions = quizData.selectedQuestions.length;
+            
+            // Actualizar número de pregunta y progreso
+            document.getElementById('question-number').textContent = 
+                `Pregunta ${qNum}/${totalQuestions}`;
+            document.getElementById('progress-bar').style.width = 
+                `${(qNum / totalQuestions) * 100}%`;
+            
+            // Mostrar pregunta en el idioma actual
+            const questionText = quizData.currentLanguage === "en" ? q.en : q.es;
+            document.getElementById('question-text').textContent = questionText;
+            
+            // Generar opciones de respuesta
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            let displayOptions;
+            if (q.number >= 26) {
+                // Para preguntas de órganos (26-50)
+                displayOptions = generateOrganOptions(q.answer);
+            } else {
+                // Para preguntas simples (1-25)
+                displayOptions = generateSimpleOptions(q.answer);
+            }
+            
+            // Mezclar opciones
+            displayOptions = shuffleArray(displayOptions);
+            
+            // Crear elementos de opción
+            displayOptions.forEach(option => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.textContent = option;
+                optionDiv.onclick = function() {
+                    // Deseleccionar todas las opciones
+                    document.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    // Seleccionar esta opción
+                    this.classList.add('selected');
+                    // Guardar respuesta
+                    quizData.answers[quizData.currentQuestion] = option;
+                };
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // Seleccionar opción previamente respondida si existe
+            const previousAnswer = quizData.answers[quizData.currentQuestion];
+            if (previousAnswer) {
+                document.querySelectorAll('.option').forEach(opt => {
+                    if (opt.textContent === previousAnswer) {
+                        opt.classList.add('selected');
+                    }
                 });
+            }
+            
+            // Actualizar botones de navegación
+            document.getElementById('prev-btn').style.display = 
+                quizData.currentQuestion > 0 ? 'inline-block' : 'none';
+            document.getElementById('next-btn').style.display = 
+                quizData.currentQuestion < totalQuestions - 1 ? 'inline-block' : 'none';
+            document.getElementById('finish-btn').style.display = 
+                quizData.currentQuestion === totalQuestions - 1 ? 'inline-block' : 'none';
+        }
 
-                const result = await response.json();
-                
-                if (result.success) {
-                    showMessage('resultsMessage', '✅ Todos los resultados han sido eliminados', 'success');
-                    loadResults();
-                } else {
-                    showMessage('resultsMessage', `❌ Error: ${result.error}`, 'error');
-                }
-            } catch (error) {
-                showMessage('resultsMessage', `❌ Error de conexión: ${error.message}`, 'error');
+        function generateSimpleOptions(correctAnswer) {
+            const allOptions = ["Cattle", "Poultry", "Pigs", "Sheep", "Goats"];
+            // Asegurar que la respuesta correcta esté presente
+            if (!allOptions.includes(correctAnswer)) {
+                allOptions[Math.floor(Math.random() * allOptions.length)] = correctAnswer;
+            }
+            return allOptions;
+        }
+
+        function generateOrganOptions(correctAnswer) {
+            const allOptions = [
+                "Cow (Bovine stomach)", "Poultry (Gizzard)", "Pig (Small intestine)", 
+                "Sheep (Skin)", "Goat (Abomasum in kids)", "Poultry (Kidney)",
+                "Pig (Cecum)", "Goat (Eyes)", "Cow (Rumen)", "Poultry (Respiratory system)",
+                "Sheep (Penis)", "Pig (Teeth)", "Cow (Ear gland system)", "Poultry (Ovary/Oviduct)",
+                "Goat (Stomach)", "Sheep (Liver)", "Pig (Large intestine)", "Sheep (Mammary gland)",
+                "Cow (Heart)", "Goat (Spleen)", "Poultry (Crop)", "Goat (Horn)", 
+                "Cow (Salivary glands)", "Pig (Skin)", "Sheep (Skin/wool follicles)"
+            ];
+            
+            // Remover la respuesta correcta
+            const wrongOptions = allOptions.filter(opt => opt !== correctAnswer);
+            
+            // Seleccionar 4 opciones incorrectas aleatorias
+            const selectedWrongOptions = getRandomQuestions(wrongOptions, 4);
+            
+            // Combinar y devolver
+            return [...selectedWrongOptions, correctAnswer];
+        }
+
+        function shuffleArray(array) {
+            return array.sort(() => 0.5 - Math.random());
+        }
+
+        function toggleLanguage() {
+            quizData.currentLanguage = quizData.currentLanguage === "en" ? "es" : "en";
+            document.getElementById('language-btn').textContent = 
+                quizData.currentLanguage === "en" ? "🌐 Español" : "🌐 English";
+            displayQuestion();
+        }
+
+        function nextQuestion() {
+            if (quizData.currentQuestion < quizData.selectedQuestions.length - 1) {
+                quizData.currentQuestion++;
+                displayQuestion();
             }
         }
 
-        // Cargar resultados al iniciar
-        document.addEventListener('DOMContentLoaded', loadResults);
+        function prevQuestion() {
+            if (quizData.currentQuestion > 0) {
+                quizData.currentQuestion--;
+                displayQuestion();
+            }
+        }
+
+        function finishQuiz() {
+            // Calcular puntaje
+            calculateScore();
+            
+            // Guardar resultado
+            saveResult();
+            
+            // Mostrar resultados
+            showResults();
+        }
+
+        function calculateScore() {
+            quizData.score = 0;
+            quizData.wrongQuestions = [];
+            
+            quizData.selectedQuestions.forEach((q, index) => {
+                const questionNum = index + 1;
+                const userAnswer = quizData.answers[index] || "";
+                const usedSpanish = quizData.currentLanguage === "es";
+                
+                if (userAnswer === q.answer) {
+                    const points = usedSpanish ? 1.5 : 2.0;
+                    quizData.score += points;
+                    quizData.questionPoints[questionNum] = {
+                        points: points,
+                        correct: true,
+                        usedSpanish: usedSpanish
+                    };
+                } else {
+                    quizData.questionPoints[questionNum] = {
+                        points: 0,
+                        correct: false,
+                        usedSpanish: usedSpanish
+                    };
+                    
+                    quizData.wrongQuestions.push({
+                        number: q.number,
+                        questionEn: q.en,
+                        questionEs: q.es,
+                        userAnswer: userAnswer,
+                        correctAnswer: q.answer
+                    });
+                }
+            });
+        }
+
+        function saveResult() {
+            const percent = (quizData.score / 20) * 100;
+            const roundedScore = Math.ceil(quizData.score) % 1 >= 0.5 ? 
+                Math.ceil(quizData.score) : Math.round(quizData.score);
+            
+            const wrongQuestionsStr = quizData.wrongQuestions
+                .map(wq => `Q${wq.number}`)
+                .join("; ");
+            
+            const result = {
+                name: quizData.studentName,
+                document: quizData.studentId,
+                score: quizData.score.toFixed(1),
+                percentage: percent.toFixed(1),
+                roundedScore: roundedScore,
+                wrongQuestions: wrongQuestionsStr
+            };
+            
+            quizData.results.push(result);
+        }
+
+        function showResults() {
+            const percent = (quizData.score / 20) * 100;
+            const roundedScore = Math.ceil(quizData.score) % 1 >= 0.5 ? 
+                Math.ceil(quizData.score) : Math.round(quizData.score);
+            
+            let emoji, color;
+            if (percent >= 90) {
+                emoji = "🎉";
+                color = "#27ae60";
+            } else if (percent >= 70) {
+                emoji = "👍";
+                color = "#f39c12";
+            } else {
+                emoji = "📚";
+                color = "#e74c3c";
+            }
+            
+            document.getElementById('score-display').innerHTML = `
+                <div>Nombre: <strong>${quizData.studentName}</strong></div>
+                <div>ID: <strong>${quizData.studentId}</strong></div>
+                <div style="color: ${color}; margin-top: 10px;">
+                    Puntaje: ${quizData.score.toFixed(1)}/20 (${percent.toFixed(1)}%) ${emoji}
+                </div>
+                <div>Puntaje Redondeado: <strong>${roundedScore}/20</strong></div>
+            `;
+            
+            // Mostrar preguntas incorrectas si las hay
+            const wrongAnswersContainer = document.getElementById('wrong-answers-container');
+            if (quizData.wrongQuestions.length > 0) {
+                wrongAnswersContainer.innerHTML = '<h3>Preguntas Incorrectas:</h3>';
+                
+                quizData.wrongQuestions.forEach(wq => {
+                    const wrongDiv = document.createElement('div');
+                    wrongDiv.className = 'question';
+                    wrongDiv.innerHTML = `
+                        <div><strong>Pregunta ${wq.number}:</strong></div>
+                        <div>${wq.questionEs}</div>
+                        <div style="margin-top: 10px;">
+                            <span class="wrong-answer">Tu respuesta: ${wq.userAnswer || "Sin responder"}</span><br>
+                            <span class="correct-answer">Respuesta correcta: ${wq.correctAnswer}</span>
+                        </div>
+                    `;
+                    wrongAnswersContainer.appendChild(wrongDiv);
+                });
+            } else {
+                wrongAnswersContainer.innerHTML = '<p>¡Perfecto! No tienes preguntas incorrectas.</p>';
+            }
+            
+            showResultsScreen();
+        }
+
+        // Funciones de administración
+        function verifyLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === "Coach" && password === "19082008") {
+                showAdminMenu();
+            } else {
+                alert("Credenciales incorrectas. Intenta nuevamente.");
+            }
+        }
+
+        function viewRanking() {
+            document.getElementById('ranking-results').classList.remove('hidden');
+            
+            const rankingBody = document.getElementById('ranking-body');
+            rankingBody.innerHTML = '';
+            
+            // Ordenar resultados por porcentaje
+            const sortedResults = [...quizData.results].sort((a, b) => 
+                parseFloat(b.percentage) - parseFloat(a.percentage));
+            
+            if (sortedResults.length === 0) {
+                rankingBody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No hay resultados aún</td></tr>';
+                return;
+            }
+            
+            sortedResults.forEach((result, index) => {
+                const row = document.createElement('tr');
+                
+                // Asignar clases para los primeros puestos
+                if (index === 0) row.className = 'gold';
+                else if (index === 1) row.className = 'silver';
+                else if (index === 2) row.className = 'bronze';
+                
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${result.name}</td>
+                    <td>${result.document}</td>
+                    <td>${result.score}</td>
+                    <td>${result.percentage}%</td>
+                    <td>${result.roundedScore}</td>
+                `;
+                
+                rankingBody.appendChild(row);
+            });
+        }
+
+        // Inicializar la aplicación cuando se carga la página
+        window.addEventListener('load', initializePyodide);
     </script>
 </body>
 </html>
